@@ -11,7 +11,7 @@
                 :article-list="responseData.data"
                 @navigate="requestArticle"
         />
-        <offline-article v-else-if="responseType===2" v-bind="responseData"/>
+        <offline-article v-else-if="responseType===2" v-bind="responseData.data"/>
     </div>
 </template>
 
@@ -39,7 +39,11 @@
             }
         },
         created() {
+            console.log('ok')
             this.requestArticle(this.currentPage)
+        },
+        updated(){
+            console.log('ok2')
         },
         data() {
             return {
@@ -53,6 +57,14 @@
                 pageSize: 5,
                 totalPage: 1
             }
+        },
+        watch:{
+            type(){
+                this.requestArticle(this.currentPage)
+            },
+            subType(){
+                this.requestArticle(this.currentPage)
+            },
         },
         methods:{
             requestArticle(page){
@@ -69,7 +81,7 @@
                         }
                     })
             }
-        }
+        },
     }
 </script>
 

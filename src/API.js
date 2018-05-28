@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {generateArticle} from "./mockServer";
+import {generateArticle, generateArticleList} from "./mockServer";
 
 const BASE_URL = '/api/v1/'
 
@@ -30,6 +30,15 @@ let handleStatus = response => {
 
 
 export function getArticle(type, subType, page, rows) {
+
+    return Promise.resolve({
+        type: 2,
+        // count: 50,
+        // data: generateArticleList(rows)
+        data:generateArticle()
+
+    })
+
     return server.get('article/get', {
         params: {
             type, subType, page, rows, offset: 0

@@ -10,6 +10,7 @@
 
 <script>
     import Pagination from "./Pagination";
+    import ArticleSketch from "./ArticleSketch";
     /***
      * 不带网络请求的普通articleList
      * events:@navigate调到第几页
@@ -17,7 +18,7 @@
 
     export default {
         name: "OfflineArticleList",
-        components: {Pagination},
+        components: {ArticleSketch, Pagination},
         props:{
             // 当前页
             currentPage:{

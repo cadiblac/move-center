@@ -123,7 +123,7 @@ export default new Router({
                     },
                     component: SelfAdaptionArticleList,
                     props:{
-                        type:0
+                        type:1
                     }
                 },
                 {
@@ -135,7 +135,7 @@ export default new Router({
                     },
                     component: SelfAdaptionArticleList,
                     props:{
-                        type:0
+                        type:2
                     }
                 },
                 {
