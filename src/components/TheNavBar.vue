@@ -1,7 +1,7 @@
 <template>
     <div class="nav-bar">
         <div class="left">
-            <img src="../assets/logo.png" class="logo" style="width: 300px">
+            <router-link to="/"><img src="../assets/logo.png" class="logo" style="width: 300px"></router-link>
         </div>
         <div class="right">
             <div class="row row-1" style="margin: 2em 0 0 0;">
@@ -118,7 +118,8 @@
     .nav-bar__submenu .el-menu-item {
         background-color: transparent !important;
     }
-    .nav-bar__submenu .el-menu-item{
+
+    .nav-bar__submenu .el-menu-item {
         color: #08264d !important;
     }
 </style>

@@ -5,8 +5,8 @@
             <my-breadcrumb/>
             <page-title>NEWS</page-title>
             <el-menu mode="horizontal">
-                <el-menu-item index="1">最新动态</el-menu-item>
-                <el-menu-item index="2">通知公告</el-menu-item>
+                <el-menu-item index="1"><router-link :to="{name:'news'}">最新动态</router-link></el-menu-item>
+                <el-menu-item index="2"><router-link :to="{name:'notice'}">通知公告</router-link></el-menu-item>
             </el-menu>
             <router-view/>
         </section>
@@ -30,7 +30,8 @@
             return {}
         },
 
-        methods: {},
+        methods: {
+        },
     }
 </script>
 

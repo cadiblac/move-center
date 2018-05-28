@@ -1,6 +1,6 @@
 <template>
     <nav class="nav-bar">
-        <img src="../../assets/logo.png" class="logo"/>
+        <router-link to="/"><img src="../../assets/logo.png" class="logo"/></router-link>
         <el-input
                 style="width: 200px;"
                 :placeholder="searchBarPlaceHolder"
@@ -11,17 +11,17 @@
 <script>
     export default {
         name: "NavBar2",
-        props:{
-            searchBarPlaceHolder:{
-                type:String,
-                default:""
+        props: {
+            searchBarPlaceHolder: {
+                type: String,
+                default: ""
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .nav-bar{
+    .nav-bar {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -30,7 +30,7 @@
 
         padding: 1em 3em;
 
-        .logo{
+        .logo {
             width: 300px;
         }
     }

@@ -8,13 +8,23 @@
             <div class="unknow" v-else>未知</div>
         </div>
         <div class="right">
-            dsfsd
+            <div class="left"><h1 class="title" @click="watchArticle(id)">{{title}}</h1>
+                <p class="content">{{summary}}</p>
+                <p class="info">
+                    发布时间:{{date}}&nbsp;&nbsp;&nbsp;&nbsp;|
+                    作者:{{author||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;|
+                    来源:{{from||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+            </div>
+            <img class="right" :src="faceUrl">
         </div>
     </div>
 </template>
 
 <script>
     import {dateUtils} from "../../util";
+    import {getResourceUrl} from "../../API";
+    import path from 'path'
 
     export default {
         name: "ArticleSketch",
@@ -38,10 +48,18 @@
             day() {
                 let day = new Date(this.date).getDay()
                 return day < 10 ? '0' + day : String(day)
+            },
+            faceUrl() {
+                return getResourceUrl(this.face)
             }
         },
         methods: {
-            getMonthEngWord: dateUtils.getMonthEngWord
+            getMonthEngWord: dateUtils.getMonthEngWord,
+            watchArticle(id) {
+                this.$router.push({
+                    path: path.join(this.$router.currentRoute.fullPath, String(id))
+                })
+            }
         }
     }
 </script>
@@ -49,11 +67,35 @@
 <style scoped lang="scss">
     .article-sketch {
         display: flex;
+        padding-top: .5em;
 
         > .right {
             flex-grow: 1;
-            background-color: red;
             border-bottom: 1px solid #cccccc;
+            display: flex;
+
+            h1.title {
+                font-weight: normal;
+                color: #144483;
+            }
+            p.content {
+                color: #585858;
+            }
+            p.info {
+                color: #999999;
+                font-size: .9em;
+            }
+
+            > .left {
+                flex-grow: 1;
+            }
+            > .right {
+                flex-shrink: 0;
+                width: 200px;
+                height: 200px;
+
+                object-fit: contain;
+            }
         }
     }
 

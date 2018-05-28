@@ -1,6 +1,6 @@
 <template>
     <div>
-        <article-sketch v-bind="articleList[0]" />
+        <article-sketch @visit="handleVisit" v-for="article in articleList" :key="article.id" v-bind="article"/>
     </div>
 </template>
 
@@ -15,15 +15,20 @@
             type: {
                 type: Number
             },
-            subType:{
-                type:Number,
-                default:0
+            subType: {
+                type: Number,
+                default: 0
             }
 
         },
-        data(){
-            return{
-                articleList:generateArticleList(4)
+        data() {
+            return {
+                articleList: generateArticleList(4)
+            }
+        },
+        methods: {
+            handleVisit(id) {
+                this.$emit('visit', id)
             }
         }
     }

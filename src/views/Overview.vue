@@ -1,12 +1,10 @@
 <template>
-    <router-view/>
+    
 </template>
 
 <script>
     export default {
-        name: "ArticleContainer",
-        methods:{
-        }
+        name: "Overview"
     }
 </script>
 

@@ -1,4 +1,7 @@
 import axios from 'axios'
+import {generateArticle} from "./mockServer";
+
+const BASE_URL = '/api/v1/'
 
 class PermissionDeniedError extends Error {
     constructor(message) {
@@ -8,7 +11,7 @@ class PermissionDeniedError extends Error {
 }
 
 let server = axios.create({
-    baseURL: '/api/v1/',
+    baseURL: BASE_URL,
     timeout: 1000
 })
 
@@ -27,7 +30,7 @@ let handleStatus = response => {
 
 
 export function getArticle(type, subType) {
-    return server.get('get', {
+    return server.get('article/get', {
         params: {
             type, subType
         }
@@ -35,3 +38,20 @@ export function getArticle(type, subType) {
 }
 
 export let getArticleList = getArticle
+
+export function getArticleById(id) {
+
+    return Promise.resolve(generateArticle())
+
+    return server.get('article/getById',{
+        params:{
+            id
+        }
+    })
+}
+
+
+export function getResourceUrl(sourceId) {
+    // return BASE_URL+'resource/'+sourceId
+    return sourceId
+}
