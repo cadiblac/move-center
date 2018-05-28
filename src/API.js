@@ -29,22 +29,24 @@ let handleStatus = response => {
 }
 
 
-export function getArticle(type, subType) {
+export function getArticle(type, subType, page, rows) {
     return server.get('article/get', {
         params: {
-            type, subType
+            type, subType, page, rows, offset: 0
         }
     }).then(handleStatus)
 }
 
 export let getArticleList = getArticle
 
+export let getSelfAdaptionArticle = getArticle
+
 export function getArticleById(id) {
 
     return Promise.resolve(generateArticle())
 
-    return server.get('article/getById',{
-        params:{
+    return server.get('article/getById', {
+        params: {
             id
         }
     })

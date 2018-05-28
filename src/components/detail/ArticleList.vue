@@ -1,6 +1,6 @@
 <template>
     <div>
-        <article-sketch @visit="handleVisit" v-for="article in articleList" :key="article.id" v-bind="article"/>
+        <article-sketch v-for="article in articleList" :key="article.id" v-bind="article"/>
     </div>
 </template>
 

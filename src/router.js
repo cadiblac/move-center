@@ -8,6 +8,7 @@ import Overview from './views/Overview'
 import ArticleList from './components/detail/ArticleList'
 import Article from './components/detail/MyArticle'
 import ArticleContainer from './components/detail/ArticleContainer'
+import SelfAdaptionArticleList from './components/detail/SelfAdaptionArticleList'
 
 
 Vue.use(Router)
@@ -103,55 +104,44 @@ export default new Router({
             children: [
                 {
                     path: 'introduction',
+                    name: 'introduction',
                     meta: {
                         // 路由用于导航的name
                         routeNavName: '中心简介',
                     },
-                    component: ArticleContainer,
-                    children: [
-                        {
-                            path: '',
-                            name: 'introduction',
-                            component: ArticleList,
-                            props: {
-                                type: 0
-                            },
-                        },
-                    ]
+                    component: SelfAdaptionArticleList,
+                    props:{
+                        type:0
+                    }
                 },
                 {
-                    path: 'notice',
+                    path: 'staff',
+                    name: 'staff',
                     meta: {
                         // 路由用于导航的name
-                        routeNavName: '通知公告',
+                        routeNavName: '中心人员',
                     },
-                    component: ArticleContainer,
-                    children: [
-                        {
-                            // 列表
-                            path: '',
-                            name: 'notice',
-                            component: ArticleList,
-                            props: {
-                                type: 1
-                            },
-                        },
-                        {
-                            // 文章
-                            path: ':id',
-                            component: Article,
-                            meta: {
-                                // 路由用于导航的name
-                                routeNavName: '正文',
-                            },
-                            props: route => ({id: Number(route.params.id)})
-                        },
-                    ]
+                    component: SelfAdaptionArticleList,
+                    props:{
+                        type:0
+                    }
+                },
+                {
+                    path: 'institution',
+                    name: 'institution',
+                    meta: {
+                        // 路由用于导航的name
+                        routeNavName: '分支机构',
+                    },
+                    component: SelfAdaptionArticleList,
+                    props:{
+                        type:0
+                    }
                 },
                 {
                     path:'',
-                    name: 'info',
-                    redirect:'news'
+                    name: 'overview',
+                    redirect:'introduction'
                 }
             ],
         },
