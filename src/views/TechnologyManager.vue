@@ -3,13 +3,16 @@
         <nav-bar2 search-bar-place-holder="搜索相关信息"/>
         <section class="content">
             <my-breadcrumb/>
-            <page-title>NEWS</page-title>
+            <page-title>TECHNOLOGY MANAGER</page-title>
             <el-menu mode="horizontal">
                 <el-menu-item index="1">
-                    <router-link :to="{name:'news'}">最新动态</router-link>
+                    <router-link :to="{name:'experts'}">专家库</router-link>
                 </el-menu-item>
                 <el-menu-item index="2">
-                    <router-link :to="{name:'notice'}">通知公告</router-link>
+                    <router-link :to="{name:'cooperation'}">合作案例</router-link>
+                </el-menu-item>
+                <el-menu-item index="3">
+                    <router-link :to="{name:'enterpriseRequirement'}">企业需求</router-link>
                 </el-menu-item>
             </el-menu>
             <router-view/>
@@ -20,20 +23,12 @@
 
 <script>
     import NavBar2 from "../components/detail/NavBar2";
-    import TheFooter from "../components/TheFooter";
     import PageTitle from "../components/detail/PageTitle";
-    import MyArticle from "../components/detail/MyArticle";
     import MyBreadcrumb from "../components/detail/MyBreadcrumb";
-
-
+    import TheFooter from "../components/TheFooter";
     export default {
-        name: "Info",
-        components: {MyBreadcrumb, MyArticle, PageTitle, TheFooter, NavBar2},
-        data() {
-            return {}
-        },
-
-        methods: {},
+        name: "technology-manager",
+        components: {TheFooter, MyBreadcrumb, PageTitle, NavBar2}
     }
 </script>
 

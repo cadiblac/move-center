@@ -3,23 +3,23 @@
 
 ## 板块分类
 
-* 中心概况
-  * 中心简介item
-  * 中心人员item
-  * 分支机构item
+* 中心概况 overview
+  * 中心简介 introduction
+  * 中心人员 staff
+  * 分支机构 institution
 
 * 咨询中心 info
   * 最新动态 news
   * 通知公告 notice
 
-* 成果专利库
-  * 科技成果
-  * 专利库
+* 成果专利库 achievement
+  * 科技成果 technology
+  * 专利库 patent
 
-* 科技管家
-  * 专家库
-  * 合作案例
-  * 企业需求
+* 科技管家 technologyManager
+  * 专家库 experts
+  * 合作案例 cooperation
+  * 企业需求 enterpriseRequirement
 
 * 专利管理
   * 专利申请流程

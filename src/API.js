@@ -32,10 +32,10 @@ let handleStatus = response => {
 export function getArticle(type, subType, page, rows) {
 
     return Promise.resolve({
-        type: 2,
-        // count: 50,
-        // data: generateArticleList(rows)
-        data:generateArticle()
+        type: 1,
+        count: 50,
+        data: generateArticleList(rows)
+        // data:generateArticle()
 
     })
 

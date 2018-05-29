@@ -1,10 +1,25 @@
 <template>
     <div class="pagination">
-        <el-button type="text" class="el-icon-arrow-left" :disabled="currentPage===1"/>
-        <el-button type="text" v-for="i in pagerCountBeforeEllipsis" @click="emitNavigate(i)">{{i}}</el-button>
-        <el-button type="text" v-if="needOmit">...</el-button>
-        <el-button type="text" v-if="needOmit" @click="emitNavigate(totalPage)">{{totalPage}}</el-button>
-        <el-button type="text" class="el-icon-arrow-right" :disabled="currentPage===totalPage"/>
+        <el-button
+                type="text"
+                class="el-icon-arrow-left"
+                :disabled="currentPage===1"
+                @click="emitNavigate(currentPage-1)"
+        />
+        <el-button
+                :type="currentPage===i+pagerCountStart-1?'success':''"
+                v-for="i in actualPagerCount"
+                @click="emitNavigate(i+pagerCountStart-1)"
+                :key="i+pagerCountStart-1"
+                circle
+        >{{i+pagerCountStart-1}}
+        </el-button>
+        <el-button
+                type="text"
+                class="el-icon-arrow-right"
+                :disabled="currentPage===totalPage"
+                @click="emitNavigate(currentPage+1)"
+        />
     </div>
 </template>
 
@@ -27,24 +42,29 @@
             }
         },
         computed: {
-            // 是否需要省略 由pagerCount和totalPage共同决定
-            needOmit() {
-                return this.pagerCount < this.totalPage
+            actualPagerCount() {
+                return Math.min(this.pagerCount, this.totalPage)
             },
-            // 省略号之前的页码数量
-            pagerCountBeforeEllipsis() {
-                return this.needOmit ? this.pagerCount - 1 : this.totalPage
-            }
+            pagerCountStart() {
+                if (this.pagerCount >= this.totalPage) return 1
+                let touchStart = this.currentPage - Math.floor(this.pagerCount / 2) <= 1
+                if (touchStart) return 1
+                let touchEnd = this.currentPage + Math.floor(this.pagerCount / 2) >= this.totalPage
+                if (touchEnd) {
+                    return this.totalPage - this.pagerCount + 1
+                } else {
+                    return this.currentPage - Math.floor(this.pagerCount / 2)
+                }
+            },
 
         },
         methods: {
             emitNavigate(page) {
-                this.emit('navigate', page)
+                this.$emit('navigate', page)
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-
 </style>

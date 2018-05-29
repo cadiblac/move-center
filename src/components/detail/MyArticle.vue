@@ -14,8 +14,6 @@
         name: "my-article",
         created(){
             getArticleById(this.id).then(article=>{
-                // this.author = article.author
-                // this.title = article.title
                 delete article.id
                 Object.assign(this,article)
             })

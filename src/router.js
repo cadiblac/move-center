@@ -5,13 +5,22 @@ import Info from './views/Info'
 import IndieArticle from './views/IndieArticle'
 import Overview from './views/Overview'
 
-import ArticleList from './components/detail/ArticleList'
+
+import Achievement from './views/Achievement'
+import Technology from './views/Achievement/Technology'
+import technologySecondNavInfo from './views/Achievement/TechnologySecondNavInfo'
+
+import TechnologyManager from './views/TechnologyManager'
+import Experts from './views/TechnologyManager/Experts'
+import expertsSecondNavInfo from './views/TechnologyManager/expertsSecondNavInfo'
+
+
 import Article from './components/detail/MyArticle'
-import ArticleContainer from './components/detail/ArticleContainer'
 import SelfAdaptionArticleList from './components/detail/SelfAdaptionArticleList'
 
 
 Vue.use(Router)
+
 
 export default new Router({
     routes: [
@@ -24,75 +33,61 @@ export default new Router({
             path: '/info',
             component: Info,
             meta: {
-                // 路由用于导航的name
                 routeNavName: '咨询中心'
             },
             children: [
                 {
                     path: 'news',
+                    name: 'news',
+                    routeNavName: '最新动态',
                     meta: {
-                        // 路由用于导航的name
-                        routeNavName: '最新动态',
+                        routeNavName: '最新动态'
                     },
-                    component: ArticleContainer,
+                    component: SelfAdaptionArticleList,
+                    props: {
+                        type: 0
+                    },
                     children: [
                         {
-                            // 列表
-                            path: '',
-                            name: 'news',
-                            component: ArticleList,
-                            props: {
-                                type: 0
-                            },
-                        },
-                        {
-                            // 文章
                             path: ':id',
                             component: Article,
                             meta: {
-                                // 路由用于导航的name
                                 routeNavName: '正文',
+                                isArticle: true
                             },
-
                             props: route => ({id: Number(route.params.id)})
-                        },
+                        }
                     ]
                 },
                 {
                     path: 'notice',
+                    name: 'notice',
+                    routeNavName: '通知公告',
                     meta: {
-                        // 路由用于导航的name
-                        routeNavName: '通知公告',
+                        routeNavName: '通知公告'
                     },
-                    component: ArticleContainer,
+                    component: SelfAdaptionArticleList,
+                    props: {
+                        type: 0
+                    },
                     children: [
                         {
-                            // 列表
-                            path: '',
-                            name: 'notice',
-                            component: ArticleList,
-                            props: {
-                                type: 1
-                            },
-                        },
-                        {
-                            // 文章
                             path: ':id',
                             component: Article,
                             meta: {
-                                // 路由用于导航的name
                                 routeNavName: '正文',
+                                isArticle: true
                             },
                             props: route => ({id: Number(route.params.id)})
-                        },
+                        }
                     ]
                 },
                 {
-                    path:'',
+                    path: '',
                     name: 'info',
-                    redirect:'news'
+                    redirect: 'news'
                 }
-            ],
+            ]
         },
         {
             path: '/overview',
@@ -110,8 +105,8 @@ export default new Router({
                         routeNavName: '中心简介',
                     },
                     component: SelfAdaptionArticleList,
-                    props:{
-                        type:0
+                    props: {
+                        type: 0
                     }
                 },
                 {
@@ -122,8 +117,8 @@ export default new Router({
                         routeNavName: '中心人员',
                     },
                     component: SelfAdaptionArticleList,
-                    props:{
-                        type:1
+                    props: {
+                        type: 1
                     }
                 },
                 {
@@ -134,27 +129,207 @@ export default new Router({
                         routeNavName: '分支机构',
                     },
                     component: SelfAdaptionArticleList,
-                    props:{
-                        type:2
+                    props: {
+                        type: 2
                     }
                 },
                 {
-                    path:'',
+                    path: '',
                     name: 'overview',
-                    redirect:'introduction'
+                    redirect: 'introduction'
+                }
+            ],
+        },
+        {
+            path: '/achievement',
+            component: Achievement,
+            meta: {
+                // 路由用于导航的name
+                routeNavName: '成果专利库'
+            },
+            children: [
+                {
+                    path: 'technology',
+                    component: Technology,
+                    meta: {
+                        // 路由用于导航的name
+                        routeNavName: '科技成果',
+                    },
+                    children: [
+                        ...technologySecondNavInfo.map(config => ({
+
+                            path: config.path,
+                            meta: {
+                                // 路由用于导航的name
+                                routeNavName: config.routeNavName,
+                            },
+                            component: SelfAdaptionArticleList,
+                            props: {
+                                type: 0,
+                                subType:config.subType
+                            },
+                            children:[
+                                {
+                                    path: ':id',
+                                    component: Article,
+                                    meta: {
+                                        routeNavName: '正文',
+                                        isArticle: true
+                                    },
+                                    props: route => ({id: Number(route.params.id)})
+                                }
+                            ]
+
+                        })),
+
+                        {
+                            path:'',
+                            name:'technology',
+                            redirect:technologySecondNavInfo[0].path
+                        }
+
+                    ]
+                },
+                {
+                    path:'patent',
+                    name:'patent',
+                    component:SelfAdaptionArticleList,
+                    meta:{
+                        routeNavName:'专利库'
+                    },
+                    props:{
+                        type:0
+                    },
+                    children:[
+                        {
+                            path: ':id',
+                            component: Article,
+                            meta: {
+                                routeNavName: '正文',
+                                isArticle: true
+                            },
+                            props: route => ({id: Number(route.params.id)})
+                        }
+                    ]
+                },
+                {
+                    path: '',
+                    name: 'achievement',
+                    redirect: 'technology'
                 }
             ],
         },
         {
             // 预留的为没有分类的文章的导航
-            path:'/article/:id',
-            component:IndieArticle,
-            props:route => ({id: Number(route.params.id)})
+            path: '/article/:id',
+            component: IndieArticle,
+            props: route => ({id: Number(route.params.id)})
         },
 
         {
+            path: '/technologyManager',
+            component: TechnologyManager,
+            meta: {
+                // 路由用于导航的name
+                routeNavName: '科技管家'
+            },
+            children: [
+                {
+                    path: 'experts',
+                    component: Experts,
+                    meta: {
+                        // 路由用于导航的name
+                        routeNavName: '专家库',
+                    },
+                    children: [
+                        ...expertsSecondNavInfo.map(config => ({
+
+                            path: config.path,
+                            meta: {
+                                // 路由用于导航的name
+                                routeNavName: config.routeNavName,
+                            },
+                            component: SelfAdaptionArticleList,
+                            props: {
+                                type: 0,
+                                subType:config.subType
+                            },
+                            children:[
+                                {
+                                    path: ':id',
+                                    component: Article,
+                                    meta: {
+                                        routeNavName: '正文',
+                                        isArticle: true
+                                    },
+                                    props: route => ({id: Number(route.params.id)})
+                                }
+                            ]
+
+                        })),
+
+                        {
+                            path:'',
+                            name:'experts',
+                            redirect:expertsSecondNavInfo[0].path
+                        }
+
+                    ]
+                },
+                {
+                    path:'cooperation',
+                    name:'cooperation',
+                    component:SelfAdaptionArticleList,
+                    meta:{
+                        routeNavName:'合作案例'
+                    },
+                    props:{
+                        type:0
+                    },
+                    children:[
+                        {
+                            path: ':id',
+                            component: Article,
+                            meta: {
+                                routeNavName: '正文',
+                                isArticle: true
+                            },
+                            props: route => ({id: Number(route.params.id)})
+                        }
+                    ]
+                },
+                {
+                    path:'enterpriseRequirement',
+                    name:'enterpriseRequirement',
+                    component:SelfAdaptionArticleList,
+                    meta:{
+                        routeNavName:'企业需求'
+                    },
+                    props:{
+                        type:0
+                    },
+                    children:[
+                        {
+                            path: ':id',
+                            component: Article,
+                            meta: {
+                                routeNavName: '正文',
+                                isArticle: true
+                            },
+                            props: route => ({id: Number(route.params.id)})
+                        }
+                    ]
+                },
+                {
+                    path: '',
+                    name: 'technologyManager',
+                    redirect: 'experts'
+                }
+            ],
+        },
+        {
             path: '/',
-            redirect: '/info'
+            redirect: '/technologyManager'
         }
     ]
 })

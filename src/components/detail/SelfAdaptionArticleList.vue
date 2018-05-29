@@ -39,11 +39,7 @@
             }
         },
         created() {
-            console.log('ok')
             this.requestArticle(this.currentPage)
-        },
-        updated(){
-            console.log('ok2')
         },
         data() {
             return {
