@@ -21,21 +21,23 @@
   * 合作案例 cooperation
   * 企业需求 enterpriseRequirement
 
-* 专利管理
-  * 专利申请流程
-  * 专利申请指南
-  * 专利成果
-  * 专利转化
-  * 专利政策法规
-  * 专利表格下载
-  * 专利相关链接
+* 专利管理 patentCenter
+  * 专利申请流程 process
+  * 专利申请指南 guidence
+  * 专利成果 即专利库
+  * 专利转化 transition
+  * 专利政策法规 policy
+  * 专利表格下载 table
+  * 专利相关链接 links
 
-* 政策法规
-  * 国家法规条例
-  * 山东省政策
-  * 济南市政策
-  * 校内规定细则
+* 政策法规 policy
+  * 国家法规条例 nation
+  * 山东省政策 province
+  * 济南市政策 city
+  * 校内规定细则 school
 
-* 办事指南
-  * 工作流程
-  * 常用下载
+* 办事指南 guidence
+  * 工作流程 process
+  * 常用下载 download
+
+* 联系我们 contact

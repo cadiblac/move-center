@@ -14,6 +14,15 @@ import TechnologyManager from './views/TechnologyManager'
 import Experts from './views/TechnologyManager/Experts'
 import expertsSecondNavInfo from './views/TechnologyManager/expertsSecondNavInfo'
 
+import PatentCenter from './views/PatentCenter'
+import patentCenterRouteInfo from './views/PatentCenter/routeInfo'
+
+import Policy from './views/Policy'
+import policyRouteInfo from './views/Policy/routeInfo'
+
+import Guidence from './views/Guidence'
+
+import Contact from './views/Contact'
 
 import Article from './components/detail/MyArticle'
 import SelfAdaptionArticleList from './components/detail/SelfAdaptionArticleList'
@@ -166,9 +175,9 @@ export default new Router({
                             component: SelfAdaptionArticleList,
                             props: {
                                 type: 0,
-                                subType:config.subType
+                                subType: config.subType
                             },
-                            children:[
+                            children: [
                                 {
                                     path: ':id',
                                     component: Article,
@@ -183,24 +192,24 @@ export default new Router({
                         })),
 
                         {
-                            path:'',
-                            name:'technology',
-                            redirect:technologySecondNavInfo[0].path
+                            path: '',
+                            name: 'technology',
+                            redirect: technologySecondNavInfo[0].path
                         }
 
                     ]
                 },
                 {
-                    path:'patent',
-                    name:'patent',
-                    component:SelfAdaptionArticleList,
-                    meta:{
-                        routeNavName:'专利库'
+                    path: 'patent',
+                    name: 'patent',
+                    component: SelfAdaptionArticleList,
+                    meta: {
+                        routeNavName: '专利库'
                     },
-                    props:{
-                        type:0
+                    props: {
+                        type: 0
                     },
-                    children:[
+                    children: [
                         {
                             path: ':id',
                             component: Article,
@@ -252,9 +261,9 @@ export default new Router({
                             component: SelfAdaptionArticleList,
                             props: {
                                 type: 0,
-                                subType:config.subType
+                                subType: config.subType
                             },
-                            children:[
+                            children: [
                                 {
                                     path: ':id',
                                     component: Article,
@@ -269,24 +278,24 @@ export default new Router({
                         })),
 
                         {
-                            path:'',
-                            name:'experts',
-                            redirect:expertsSecondNavInfo[0].path
+                            path: '',
+                            name: 'experts',
+                            redirect: expertsSecondNavInfo[0].path
                         }
 
                     ]
                 },
                 {
-                    path:'cooperation',
-                    name:'cooperation',
-                    component:SelfAdaptionArticleList,
-                    meta:{
-                        routeNavName:'合作案例'
+                    path: 'cooperation',
+                    name: 'cooperation',
+                    component: SelfAdaptionArticleList,
+                    meta: {
+                        routeNavName: '合作案例'
                     },
-                    props:{
-                        type:0
+                    props: {
+                        type: 0
                     },
-                    children:[
+                    children: [
                         {
                             path: ':id',
                             component: Article,
@@ -299,16 +308,16 @@ export default new Router({
                     ]
                 },
                 {
-                    path:'enterpriseRequirement',
-                    name:'enterpriseRequirement',
-                    component:SelfAdaptionArticleList,
-                    meta:{
-                        routeNavName:'企业需求'
+                    path: 'enterpriseRequirement',
+                    name: 'enterpriseRequirement',
+                    component: SelfAdaptionArticleList,
+                    meta: {
+                        routeNavName: '企业需求'
                     },
-                    props:{
-                        type:0
+                    props: {
+                        type: 0
                     },
-                    children:[
+                    children: [
                         {
                             path: ':id',
                             component: Article,
@@ -328,8 +337,184 @@ export default new Router({
             ],
         },
         {
+            path: '/patentCenter',
+            meta: {
+                routeNavName: '专利管理'
+            },
+            component: PatentCenter,
+            children: [
+                ...patentCenterRouteInfo.map(
+                    routeInfo => ({
+                        path: routeInfo.path,
+                        meta: {
+                            routeNavName: routeInfo.routeNavName
+                        },
+                        component: SelfAdaptionArticleList,
+                        props: {
+                            type: routeInfo.type
+                        },
+                        children: routeInfo.isArticle ? undefined : [
+                            {
+                                path: ':id',
+                                component: Article,
+                                meta: {
+                                    routeNavName: '正文',
+                                    isArticle: true
+                                },
+                                props: route => ({id: Number(route.params.id)})
+                            }
+                        ]
+
+                    })
+                ),
+
+                {
+                    path: '',
+                    name: 'patentCenter',
+                    redirect: 'process'
+                }
+            ]
+        },
+        {
+            path: '/policy',
+            meta: {
+                routeNavName: '政策法规'
+            },
+            component: Policy,
+            children: [
+                ...policyRouteInfo.map(
+                    routeInfo => ({
+                        path: routeInfo.path,
+                        meta: {
+                            routeNavName: routeInfo.routeNavName
+                        },
+                        component: SelfAdaptionArticleList,
+                        props: {
+                            type: routeInfo.type
+                        },
+                        children: routeInfo.isArticle ? undefined : [
+                            {
+                                path: ':id',
+                                component: Article,
+                                meta: {
+                                    routeNavName: '正文',
+                                    isArticle: true
+                                },
+                                props: route => ({id: Number(route.params.id)})
+                            }
+                        ]
+
+                    })
+                ),
+
+                {
+                    path: '',
+                    name: 'policy',
+                    redirect: 'nation'
+                }
+            ]
+        },
+        {
+            path:'/guidence',
+            meta: {
+                routeNavName: '办事指南'
+            },
+            component: Guidence,
+            children: [
+                ...policyRouteInfo.map(
+                    routeInfo => ({
+                        path: routeInfo.path,
+                        meta: {
+                            routeNavName: routeInfo.routeNavName
+                        },
+                        component: SelfAdaptionArticleList,
+                        props: {
+                            type: routeInfo.type
+                        },
+                        children: routeInfo.isArticle ? undefined : [
+                            {
+                                path: ':id',
+                                component: Article,
+                                meta: {
+                                    routeNavName: '正文',
+                                    isArticle: true
+                                },
+                                props: route => ({id: Number(route.params.id)})
+                            }
+                        ]
+
+                    })
+                ),
+                {
+                    path: 'process',
+                    meta: {
+                        routeNavName: '办事流程'
+                    },
+                    component: SelfAdaptionArticleList,
+                    props: {
+                        type: 0
+                    },
+                    children:  [
+                        {
+                            path: ':id',
+                            component: Article,
+                            meta: {
+                                routeNavName: '正文',
+                                isArticle: true
+                            },
+                            props: route => ({id: Number(route.params.id)})
+                        }
+                    ]
+                },
+                {
+                    path: 'download',
+                    meta: {
+                        routeNavName: '常用下载'
+                    },
+                    component: SelfAdaptionArticleList,
+                    props: {
+                        type: 0
+                    },
+                    children:  [
+                        {
+                            path: ':id',
+                            component: Article,
+                            meta: {
+                                routeNavName: '正文',
+                                isArticle: true
+                            },
+                            props: route => ({id: Number(route.params.id)})
+                        }
+                    ]
+                },
+                {
+                    path: '',
+                    name: 'guidence',
+                    redirect: 'process'
+                }
+            ]
+        },
+        {
+            path:'/contact',
+            meta: {
+                routeNavName: '联系我们'
+            },
+            component: Contact,
+            children:[
+                {
+                    path:'',
+                    name:'contact',
+                    component:SelfAdaptionArticleList,
+                    props:{
+                        type:0
+                    }
+                }
+            ]
+
+        },
+        {
             path: '/',
-            redirect: '/technologyManager'
+            redirect: '/home'
         }
     ]
 })

@@ -1,0 +1,26 @@
+export default [
+    {
+        routeNavName:'国家法规条例',
+        path:'nation',
+        isArticle:false,
+        type:0
+    },
+    {
+        routeNavName:'山东省政策',
+        path:'province',
+        isArticle:false,
+        type:0
+    },
+    {
+        routeNavName:'济南市政策',
+        path:'city',
+        isArticle:false,
+        type:0
+    },
+    {
+        routeNavName:'校内规定细则',
+        path:'school',
+        isArticle:false,
+        type:0
+    },
+]
