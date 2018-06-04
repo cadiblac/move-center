@@ -7,9 +7,9 @@
 </template>
 
 <script>
-    import TheFooter from "../components/TheFooter";
-    import NavBar2 from "../components/detail/NavBar2";
-    import MyArticle from "../components/detail/MyArticle";
+    import TheFooter from "../../components/TheFooter";
+    import NavBar2 from "../../components/detail/NavBar2";
+    import MyArticle from "../../components/detail/MyArticle";
     export default {
         name: "IndieArticle",
         components: {MyArticle, NavBar2, TheFooter},

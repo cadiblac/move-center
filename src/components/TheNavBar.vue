@@ -20,55 +20,27 @@
                     :popper-append-to-body="false"
                     router>
                 <el-menu-item index="/home">首页</el-menu-item>
-                <el-submenu
-                        popper-class="nav-bar__submenu"
-                        index="/overview"
-                        :popper-append-to-body="false"
-                >
-                    <template slot="title">中心概况</template>
-                    <el-menu-item index="/overview/introduction">中心简介</el-menu-item>
-                    <el-menu-item index="/overview/staff">中心人员</el-menu-item>
-                    <el-menu-item index="/overview/institution">分支结构</el-menu-item>
-                </el-submenu>
-                <el-submenu index="/achievement" :popper-append-to-body="false"
-                            popper-class="nav-bar__submenu">
-                    <template slot="title">成果专利</template>
-                    <el-menu-item index="/achievement/technology">科技成果</el-menu-item>
-                    <el-menu-item index="/achievement/patent">专利库</el-menu-item>
-                </el-submenu>
-                <el-submenu index="/technologyManager" :popper-append-to-body="true"
-                            popper-class="nav-bar__submenu">
-                    <template slot="title">科技管家</template>
-                    <el-menu-item index="/technologyManager/experts">专家库</el-menu-item>
-                    <el-menu-item index="/technologyManager/cooperation">合作案例</el-menu-item>
-                    <br>
-                    <el-menu-item index="/technologyManager/enterpriseRequirement">企业需求</el-menu-item>
-                </el-submenu>
-                <el-submenu index="/patentCenter"
-                            popper-class="nav-bar__submenu">
-                    <template slot="title">专利管理</template>
-                    <el-menu-item index="/patentCenter/process">专利申请流程</el-menu-item>
-                    <el-menu-item index="/patentCenter/guidence">专利申请指南</el-menu-item>
-                    <el-menu-item index="/achievement/patent">专利成果</el-menu-item>
-                    <el-menu-item index="/patentCenter/transition">专利转化</el-menu-item>
-                    <el-menu-item index="/patentCenter/policy">专利政策法规</el-menu-item>
-                    <el-menu-item index="/patentCenter/tableDownload">专利表格下载</el-menu-item>
-                    <el-menu-item index="/patentCenter/links">专利相关链接</el-menu-item>
-                </el-submenu>
-                <el-submenu index="/policy"
-                            popper-class="nav-bar__submenu">
-                    <template slot="title">政策法规</template>
-                    <el-menu-item index="/policy/nation">国家法律条例</el-menu-item>
-                    <el-menu-item index="/policy/province">山东省政策</el-menu-item>
-                    <el-menu-item index="/policy/city">济南市政策</el-menu-item>
-                    <el-menu-item index="/policy/school">校内规定细则</el-menu-item>
-                </el-submenu>
-                <el-submenu index="/guidence"
-                            popper-class="nav-bar__submenu">
-                    <template slot="title">办事指南</template>
-                    <el-menu-item index="/guidence/process">工作流程</el-menu-item>
-                    <el-menu-item index="/guidence/download">常用下载</el-menu-item>
-                </el-submenu>
+                <template v-for="category in moduleInfos">
+                    <el-submenu
+                            v-if="category.modules.length>=2"
+                            :key="category.path"
+                            popper-class="nav-bar__submenu"
+                            :index="path.join('/',category.path)"
+                            :popper-append-to-body="false">
+                        <template slot="title">{{category.name}}</template>
+                        <el-menu-item
+                                v-for="module in category.modules"
+                                :key="module.path"
+                                :index="path.join('/',category.path,module.path)">{{module.name}}
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-menu-item
+                            v-else
+                            :key="category.path"
+                            :index="path.join('/',category.path)">{{category.name}}
+                    </el-menu-item>
+
+                </template>
             </el-menu>
         </div>
     </div>
@@ -77,12 +49,20 @@
 <script>
     import SearchBar from "./SearchBar";
     import MyHr from "./MyHr";
+    import moduleInfos from '../moduleInfos'
+    import path from 'path'
 
     export default {
         name: "TheNavBar",
         components: {MyHr, SearchBar},
         comments: {
             SearchBar
+        },
+        data() {
+            return {
+                moduleInfos,
+                path
+            }
         }
     }
 </script>

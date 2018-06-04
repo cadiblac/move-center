@@ -11,7 +11,7 @@
             <div class="left"><h1 class="title" @click="watchArticle(id)">{{title}}</h1>
                 <p class="content">{{summary}}</p>
                 <p class="info">
-                    发布时间:{{date}}&nbsp;&nbsp;&nbsp;&nbsp;|
+                    发布时间:{{new Date(date).toString()}}&nbsp;&nbsp;&nbsp;&nbsp;|
                     作者:{{author||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;|
                     来源:{{from||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;
                 </p>

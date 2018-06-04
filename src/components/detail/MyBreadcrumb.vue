@@ -39,10 +39,7 @@
         },
         methods: {
             updateMatchedRoutes() {
-                this.matchedRoutes = this.$router.currentRoute.matched
-            },
-            isLastRoute(index) {
-                return index === this.routesNavgatable.length - 1
+                this.matchedRoutes = this.$route.matched
             }
         }
     }

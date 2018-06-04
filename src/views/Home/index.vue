@@ -10,14 +10,14 @@
 </template>
 
 <script>
-    import pic1 from '../assets/bb3.jpg'
-    import pic2 from '../assets/bb2.jpg'
-    import TheNavBar from '../components/TheNavBar'
-    import Slider from '../components/Slider'
-    import TheFooter from "../components/TheFooter";
-    import NewsSection from "./Home/NewsSection";
-    import ExpertsSection from "./Home/ExpertsSection";
-    import ResearchSection from "./Home/ResearchSection";
+    import pic1 from '../../assets/bb3.jpg'
+    import pic2 from '../../assets/bb2.jpg'
+    import TheNavBar from '../../components/TheNavBar'
+    import Slider from '../../components/Slider'
+    import TheFooter from "../../components/TheFooter";
+    import NewsSection from "./NewsSection";
+    import ExpertsSection from "./ExpertsSection";
+    import ResearchSection from "./ResearchSection";
 
     export default {
         name: 'home',
