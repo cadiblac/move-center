@@ -1,13 +1,10 @@
 <template>
     <el-card :body-style="{ padding: '10px' }" style="width: 300px;">
-        <el-upload
-                class="face-uploader"
-                :action="imageUploadUrl"
-                :on-success="handleFaceSuccess"
-                :show-file-list="false">
-            <img v-if="faceUrl" :src="faceUrl" class="face">
-            <i v-else class="el-icon-plus face-uploader-icon "></i>
-        </el-upload>
+        <div class="image-uploader" @click="$refs.input.click()">
+            <input type="file" hidden ref="input" accept="image/*" @change="handleInputChange"/>
+            <img v-if="imageUrl" :src="imageUrl">
+            <i v-else class="el-icon-plus image-uploader-icon "></i>
+        </div>
 
         <el-form>
             <el-form-item label="标题">
@@ -28,40 +25,59 @@
 </template>
 
 <script>
+    import {addRotation} from "../../../API";
+
     export default {
         name: "RotationAddCard",
-        data: {
-            title: '',
-            subTitle: '',
-            link: '',
+        data() {
+            return {
+                title: '',
+                subTitle: '',
+                link: '',
+                image: null
+            }
+        },
+        computed: {
+            imageUrl() {
+                return this.image ? URL.createObjectURL(this.image) : ''
+            }
         },
         methods: {
             cancel() {
                 this.$router.go(-1)
             },
             onSubmit() {
-                return
+                let formData = new FormData()
+                formData.append('title', this.title)
+                formData.append('subTitle', this.subTitle)
+                formData.append('link', this.link)
+                formData.append('id', this.image)
+                addRotation(formData)
+            },
+            handleInputChange(e) {
+                if (!e.target.files) return
+                this.image = e.target.files[0]
             }
-
 
         }
     }
 </script>
 
 <style>
-    .face-uploader .el-upload {
+    .image-uploader {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        display: inline-block;
     }
 
-    .face-uploader .el-upload:hover {
+    .image-uploader:hover {
         border-color: #409EFF;
     }
 
-    .face-uploader-icon {
+    .image-uploader-icon {
         font-size: 28px;
         color: #8c939d;
         width: 178px;
@@ -70,9 +86,10 @@
         text-align: center;
     }
 
-    .face {
+    .image-uploader img {
         width: 178px;
         height: 178px;
         display: block;
+        object-fit: cover;
     }
 </style>

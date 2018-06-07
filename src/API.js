@@ -1,8 +1,10 @@
 import axios from 'axios'
 import {generateArticle, generateArticleList} from "./mockServer";
 import path from 'path'
+import qs from 'qs'
 
-const BASE_URL = '/api/v1/'
+// const BASE_URL = '/api/v1/'
+const BASE_URL = 'http://m.wangjingxin.top:22223/move/api/v1/'
 
 class PermissionDeniedError extends Error {
     constructor(message) {
@@ -60,17 +62,29 @@ export function getArticleById(id) {
             id
         }
     })
+        .then(handleStatus)
 }
 
 
 export function getResourceUrl(sourceId) {
-    // return BASE_URL+'resource/'+sourceId
-    return sourceId
+    return path.join(BASE_URL, 'resource', sourceId)
+    // return sourceId
 }
 
-export const imageUploadUrl = path.join(BASE_URL,'article/upload')
+export const imageUploadUrl = path.join(BASE_URL, 'article/upload')
 
 export function getRotationList() {
 
     return server.get('rotation/get')
+        .then(handleStatus)
+}
+
+export function deleteRotation(id) {
+    return server.post('rotation/delete', qs.stringify({id}))
+        .then(handleStatus)
+}
+
+export function addRotation(data) {
+    return server.post('rotation/add', data)
+        .then(handleStatus)
 }

@@ -1,10 +1,14 @@
 <template>
     <div>
-        <div>
-            <rotation-display-card v-for="rotation in rotationList" :key="rotation.id" v-bind="rotation"/>
+        <div style="display: flex">
+            <rotation-display-card @needUpdate="updateList" v-for="rotation in rotationList" :key="rotation.id" v-bind="rotation"/>
         </div>
         <div>
-            <el-button type="primary" icon="el-icon-circle-plus" @click="add">添加</el-button>
+            <el-button
+                    type="primary"
+                    icon="el-icon-circle-plus"
+                    @click="$router.push('/admin/rotation/add')">添加
+            </el-button>
         </div>
         <router-view/>
     </div>
@@ -19,9 +23,7 @@
         name: "index",
         components: {RotationDisplayCard},
         created() {
-            getRotationList().then(rotationList => {
-                this.rotationList = rotationList
-            })
+            this.updateList()
         },
         data() {
             return {
@@ -33,11 +35,13 @@
                 }]
             }
         },
-        methods:{
-            add(){
-                this.$router.push('/admin/rotation/add')
+        methods: {
+            updateList(){
+                getRotationList().then(rotationList => {
+                    this.rotationList = rotationList
+                })
             }
-        }
+        },
     }
 </script>
 
