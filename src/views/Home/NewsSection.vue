@@ -10,13 +10,14 @@
                 <preview-box
                         title="动态"
                         title-eng="Events"
-                        all-link="baidu.com"
+                        all-link="/info/news"
                 >
                     <news-display-box
                             box-class-name="news-box"
                             :date="Date.now()"
                             title="为“海洋山东”扬帆领航——山东大学服务海洋山东纪实"
                             :background-image="newsSamplePic1"
+                            :link="'/info/news/123'"
                     />
                     <news-display-box
                             box-class-name="news-box"
@@ -28,7 +29,7 @@
                 <preview-box
                         title="通知"
                         title-eng="Notices"
-                        all-link="baidu.com"
+                        all-link="/info/notice"
                         style="width: 300px">
                     <notice-item
                             title="test"

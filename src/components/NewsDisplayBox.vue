@@ -1,12 +1,12 @@
 <template>
-    <a :href="link" :class="[boxClassName,'preset-news-display-box-style']"
+    <router-link :to="link" :class="[boxClassName,'preset-news-display-box-style']"
        :style="{backgroundImage:`url(${backgroundImage})`}">
         <div class="date-label">
             <span class="month">{{getMonthEngWord(new Date(date).getMonth())}}</span><br>
             <span class="day">{{new Date(date).getDay()}}</span>
         </div>
         <div class="title-area">{{title}}</div>
-    </a>
+    </router-link>
 </template>
 
 <script>
@@ -20,7 +20,7 @@
             backgroundImage: String,
             title: String,
             link: {
-                default:'javascript:void(0)'
+                default:''
             },
             date: {
                 type: Number,

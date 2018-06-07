@@ -3,8 +3,14 @@
         <el-header>
             <the-header/>
         </el-header>
-        <el-aside><the-nav-bar/></el-aside>
-        <el-main></el-main>
+        <el-container>
+            <el-aside width="200px">
+                <the-nav-bar/>
+            </el-aside>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
+        </el-container>
     </el-container>
 </template>
 

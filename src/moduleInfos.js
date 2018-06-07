@@ -7,13 +7,15 @@ let SubModule = (name, path, subType) => ({
 // 暂时只有一种子模块
 let subModuleGroup1 = [
     SubModule('全部', 'all', 0),
-    SubModule('电子信息', 'dianzi', 1),
-    SubModule('能源环保', 'nengyuan', 3),
-    SubModule('装备制造', 'zhuangbei', 4),
-    SubModule('生物医药', 'shengwu', 5),
-    SubModule('化工材料', 'huagong', 6),
-    SubModule('土木交通', 'tumu', 7),
-    SubModule('相关其他', 'other', 8),
+    SubModule('信息技术', 'infomation', 1),
+    SubModule('生物技术', 'biology', 3),
+    SubModule('新材料', 'material', 4),
+    SubModule('能源技术', 'energy', 5),
+    SubModule('激光技术', 'laser', 6),
+    SubModule('自动化技术', 'auto', 7),
+    SubModule('航天技术', 'space', 8),
+    SubModule('海洋技术', 'ocean', 9),
+    SubModule('其它技术领域', 'other', 10),
 ]
 
 let Category = (name, path, meta, modules) => ({
@@ -51,15 +53,20 @@ export default [
     },[
         Module('专家资源', 'experts',7,true)
     ]),
+    Category('新旧动能转化', 'translation', {
+        title:'TRANSLATION'
+    },[
+        Module('新旧动能转化', 'translation',8,true)
+    ]),
     Category('办事指南', 'guidence',{
         title:'GUIDENCE'
     },[
-        Module('办事指南', 'guidence',8)
+        Module('办事指南', 'guidence',9)
     ]),
     Category('常用下载', 'download',{
         title:'DOWNLOADS'
     },[
-        Module('常用下载', 'download',9)
+        Module('常用下载', 'download',10)
     ]),
 ]
 

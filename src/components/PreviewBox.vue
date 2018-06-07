@@ -2,9 +2,11 @@
     <div class="preview-box">
         <div class="preview-box__head">
             <span class="title"><span class="chs">{{title}}</span><span class="eng">{{titleEng}}</span></span>
-            <a :href="allLink" class="all">ALL>></a>
+            <router-link :to="allLink" class="all">ALL</router-link>
         </div>
-        <div class="preview-box__body"><slot></slot></div>
+        <div class="preview-box__body">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -15,10 +17,14 @@
         name: "PreviewBox",
         props: {
             allLink: {
-                default: 'javascript::void(0)'
+                default: ''
             },
             title: String,
-            titleEng: String
+            titleEng: String,
+            router: {
+                type: Boolean,
+                default: false
+            }
         }
     }
 </script>

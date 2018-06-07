@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>SubModule:{{currentSubModule.name}}</h1>
         <self-adaption-article-list :type="type" :sub-type="subType"/>
     </div>
 </template>

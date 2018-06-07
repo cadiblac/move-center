@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {generateArticle, generateArticleList} from "./mockServer";
+import path from 'path'
 
 const BASE_URL = '/api/v1/'
 
@@ -65,4 +66,11 @@ export function getArticleById(id) {
 export function getResourceUrl(sourceId) {
     // return BASE_URL+'resource/'+sourceId
     return sourceId
+}
+
+export const imageUploadUrl = path.join(BASE_URL,'article/upload')
+
+export function getRotationList() {
+
+    return server.get('rotation/get')
 }

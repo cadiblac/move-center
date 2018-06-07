@@ -7,35 +7,35 @@
         <my-hr/>
         <section-content>
             <el-menu
+                    :default-active="curIndex"
+                    @select="handleSelect"
                     class="research-nav-bar"
                     mode="horizontal"
             >
-                <el-menu-item index="1">技术成果</el-menu-item>
-                <el-menu-item index="2">专利信息</el-menu-item>
-                <el-menu-item index="3">成功案例</el-menu-item>
+                <el-menu-item index="0">技术成果</el-menu-item>
+                <el-menu-item index="1">专利信息</el-menu-item>
+                <el-menu-item index="2">成功案例</el-menu-item>
             </el-menu>
             <div class="research-display-box-wrapper" style="font-size: .9em">
                 <research-display-box
-                        :photo="research1"
-                        title="电子信息类"
-                        title-eng="digital information"
-                        content="万兆网络多核处理器SOC芯片产业化"
-                />
-                <research-display-box
-                        :photo="research1"
-                        title="电子信息类"
-                        title-eng="digital information"
-                        content="万兆网络多核处理器SOC芯片产业化"
-                />
-                <research-display-box
-                        :photo="research1"
-                        title="电子信息类"
-                        title-eng="digital information"
-                        content="万兆网络多核处理器SOC芯片产业化"
+                        v-for="article in displayingBoxes"
+                        :key="article.id"
+                        :photo="getResourceUrl(article.face)"
+                        :title="article.title"
+                        title-eng=""
+                        :content="article.summary"
                 />
             </div>
             <template slot="more">
-                <blue-button>更多技术成果</blue-button>
+                <router-link :to="'/achievement/technology'" v-if="curIndex==='0'">
+                    <blue-button>更多技术成果</blue-button>
+                </router-link>
+                <router-link :to="'/achievement/patent'" v-else-if="curIndex==='1'">
+                    <blue-button>更多专利信息</blue-button>
+                </router-link>
+                <router-link :to="'/achievement/case'" v-else="curIndex==='2'">
+                    <blue-button>更多成功案例</blue-button>
+                </router-link>
             </template>
         </section-content>
     </section>
@@ -48,13 +48,22 @@
     import BlueButton from "../../components/BlueButton";
     import ResearchDisplayBox from "../../components/ResearchDisplayBox";
     import research1 from '../../assets/research_1.jpg'
+    import {getResourceUrl} from "../../API";
 
     export default {
         name: "ResearchSection",
         components: {ResearchDisplayBox, BlueButton, SectionContent, MyHr, SectionTitle},
-        data(){
+        data() {
             return {
-                research1
+                research1,
+                displayingBoxes: [],
+                curIndex: '0'
+            }
+        },
+        methods: {
+            getResourceUrl,
+            handleSelect(i) {
+                this.curIndex = i
             }
         }
     }

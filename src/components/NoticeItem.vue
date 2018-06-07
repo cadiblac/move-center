@@ -8,7 +8,7 @@
             <div class="right day">{{new Date(date).getDay()}}</div>
         </div>
         <div class="seprate"></div>
-        <a class="title" :href="link">{{title}}</a>
+        <router-link class="title" :to="link">{{title}}</router-link>
     </div>
 </template>
 
@@ -21,7 +21,7 @@
             date:Number,
             title:String,
             link:{
-                default:'javascript:void(0)'
+                default:''
             }
         },
         methods:{

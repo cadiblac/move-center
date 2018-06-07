@@ -29,10 +29,16 @@
     import PageTitle from "../../components/detail/PageTitle";
     import TheFooter from "../../components/TheFooter";
     import SelfAdaptionArticleList from "../../components/detail/SelfAdaptionArticleList";
+    import path from 'path'
 
     export default {
         name: "index",
         components: {SelfAdaptionArticleList, TheFooter, PageTitle, MyBreadcrumb, NavBar2},
+        data(){
+            return{
+                path
+            }
+        },
         computed: {
 
             meta() {
