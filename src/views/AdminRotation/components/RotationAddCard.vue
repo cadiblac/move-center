@@ -13,7 +13,7 @@
             <el-form-item label="子标题">
                 <el-input v-model="subTitle"></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item label="链接">
                 <el-input v-model="link"></el-input>
             </el-form-item>
             <el-form-item>
@@ -37,6 +37,9 @@
                 image: null
             }
         },
+        created(){
+            this.$emit('needUpdate')
+        },
         computed: {
             imageUrl() {
                 return this.image ? URL.createObjectURL(this.image) : ''
@@ -51,8 +54,19 @@
                 formData.append('title', this.title)
                 formData.append('subTitle', this.subTitle)
                 formData.append('link', this.link)
-                formData.append('id', this.image)
-                addRotation(formData)
+                formData.append('file', this.image)
+                addRotation(formData).then(()=>{
+                    this.$emit('needUpdate')
+                    this.$message({
+                        type: 'success',
+                        message: '添加成功!'
+                    });
+                },e=>{
+                    this.$message({
+                        type: 'danger',
+                        message: '失败：'+e.message
+                    });
+                })
             },
             handleInputChange(e) {
                 if (!e.target.files) return

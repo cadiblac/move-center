@@ -12,9 +12,6 @@
             <el-form-item label="标题">
                 <el-input v-model="title"></el-input>
             </el-form-item>
-            <el-form-item label="摘要">
-                <el-input v-model="summary"></el-input>
-            </el-form-item>
             <el-form-item label="作者">
                 <el-input v-model="author"></el-input>
             </el-form-item>
@@ -22,52 +19,42 @@
                 <el-input v-model="from"></el-input>
             </el-form-item>
             <el-form-item label="封皮图片">
-                <el-upload
-                        class="face-uploader"
-                        :action="imageUploadUrl"
-                        :on-success="handleFaceSuccess"
-                        :show-file-list="false">
+                <div class="face-uploader" @click="$refs.faceUploaderInput.click()">
+                    <input type="file" accept="image/*" hidden ref="faceUploaderInput"
+                           @change="handleFaceUploaderChange"/>
                     <img v-if="faceUrl" :src="faceUrl" class="face">
-                    <i v-else class="el-icon-plus face-uploader-icon "></i>
-                </el-upload>
+                    <i v-else class="el-icon-plus face-uploader-icon"></i>
+                </div>
             </el-form-item>
             <el-form-item label="发布时间">
                 <el-date-picker
                         v-model="date"
-                        type="datetime"
+                        type="date"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd"
                         placeholder="选择日期时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="内容">
                 <quill-editor v-model="content"
-                              :options="editorOption"
-                              ref="myQuillEditor">
+                              :options="editorOption">
                 </quill-editor>
             </el-form-item>
             <el-form-item>
                 <el-button @click="cancel">返回</el-button>
-                <el-button type="primary" @click="onSubmit">{{isNew?'发表文章':'修改文章'}}</el-button>
+                <el-button type="primary" @click="onSubmit" :disabled="submitting">发表文章</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
 <script>
-    import {getArticleById, imageUploadUrl} from "../../API";
+    import {uploadImage, addArticle} from "../../API";
     import moduleInfos from '../../moduleInfos'
+    import {dateUtils} from "../../util";
 
     export default {
-        name: "AdminArticle",
-        created() {
-            getArticleById(this.id).then(article => {
-
-            })
-        },
-        props: {
-            id: {
-                type: Number
-            }
-        },
+        name: "AdminArticleAdd",
         data() {
             return {
                 // 级联选择器option
@@ -84,8 +71,7 @@
                         })) : undefined
                     }))
                 })),
-                faceUrl: undefined,
-                faceId: undefined,
+                faceImg: undefined,
                 editorOption: {
                     placeholder: '在此输入内容'
                 },
@@ -93,56 +79,94 @@
                 // 表单项
                 selectedOptions: [],
                 title: '',
-                summary: '',
                 author: '',
                 content: '',
-                date: Date.now(),
-                from:'',
+                plainContent: '',
+                date: dateUtils.format(new Date(), 'yyyy-MM-dd'),
+                from: '',
 
-                imageUploadUrl
+                submitting: false,
+
             }
         },
         computed: {
-            // 是否是新创建文章
-            isNew() {
-                return this.id ? false : true
-            },
-            form() {
-                return {
-                    id: this.isNew ? undefined : this.id,
-                    author: this.author,
-                    title: this.title,
-                    summary: this.summary,
-                    type: this.selectedOptions[1],
-                    subType: this.selectedOptions[2] ? this.selectedOptions[2] : 0,
-                    from:this.from,
-                    content: this.content,
-                    date: this.date,
-                    face: this.faceId,
-                }
+            faceUrl() {
+                return this.faceImg ? URL.createObjectURL(this.faceImg) : null
             },
         },
+        watch: {
+            content(val) {
+                let ele = document.createElement('div')
+                ele.innerHTML = val
+                this.plainContent = ele.textContent
+            }
+        },
         methods: {
-            handleFaceSuccess(res, file) {
-                this.faceUrl = URL.createObjectURL(file.raw);
-            },
-            cancel(){
+            cancel() {
                 this.$router.go(-1)
+            },
+            onSubmit() {
+                // 还没有添加封面图 退出
+                if (!this.faceImg) return
+
+                this.submitting = true
+
+
+                // upload
+                let faceForm = new FormData()
+                faceForm.append('file', this.faceImg)
+                uploadImage(faceForm).then(id => {
+                    addArticle({
+                        author: this.author,
+                        title: this.title,
+                        plainContent: this.plainContent,
+                        type: this.selectedOptions[1],
+                        subType: this.selectedOptions[2] ? this.selectedOptions[2] : 0,
+                        from: this.from,
+                        content: this.content,
+                        date: this.date,
+                        face: id,
+                        annex: ''
+                    }).then(
+                        () => {
+                            this.$emit('needUpdate')
+                            this.$message({
+                                type: 'success',
+                                message: '发表成功'
+                            });
+                            this.$router.go(-1)
+                        },
+                        e => {
+                            this.$message({
+                                type: 'danger',
+                                message: '失败：' + e.message
+                            });
+                        }
+                    )
+                }).then(() => {
+                    this.submitting = false
+                })
+            },
+            handleFaceUploaderChange(e) {
+                if (!e.target.files) return
+                this.faceImg = e.target.files[0]
             }
         }
     }
 </script>
 
 <style>
-    .face-uploader .el-upload {
+    .face-uploader {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        display: inline-block;
+
     }
 
-    .face-uploader .el-upload:hover {
+    .face-uploader:hover {
         border-color: #409EFF;
     }
 

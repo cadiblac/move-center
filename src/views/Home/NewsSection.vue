@@ -12,18 +12,16 @@
                         title-eng="Events"
                         all-link="/info/news"
                 >
+                    <p v-if="newsItems.length==0">暂无新闻</p>
                     <news-display-box
+                            v-else
+                            v-for="newsItem in newsItems"
+                            :key="newsItem.id"
                             box-class-name="news-box"
-                            :date="Date.now()"
-                            title="为“海洋山东”扬帆领航——山东大学服务海洋山东纪实"
-                            :background-image="newsSamplePic1"
-                            :link="'/info/news/123'"
-                    />
-                    <news-display-box
-                            box-class-name="news-box"
-                            :date="Date.now()"
-                            title="经济强省建设中的“山大智慧”——山东大学服务山东经济强省建设纪实"
-                            :background-image="newsSamplePic2"
+                            :date="newsItem.date"
+                            :title="newsItem.title"
+                            :background-image="newsItem.face"
+                            :link="`/info/news/${newsItem.id}`"
                     />
                 </preview-box>
                 <preview-box
@@ -31,33 +29,14 @@
                         title-eng="Notices"
                         all-link="/info/notice"
                         style="width: 300px">
+                    <p v-if="noticeItems.length==0">暂无通知</p>
                     <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="test"
-                            :date="Date.now()"
-                            style="margin: .5em 0"/>
-                    <notice-item
-                            title="关于推荐新材料领域专家的函(鲁经 信字（2017）186号)"
-                            :date="Date.now()"
+                            v-else
+                            v-for="noticeItem in noticeItems"
+                            :key="noticeItem.id"
+                            :title="noticeItem.title"
+                            :date="noticeItem.date"
+                            :link="`/info/notice/${noticeItem.id}`"
                             style="margin: .5em 0"/>
                 </preview-box>
             </div>
@@ -72,16 +51,23 @@
     import NoticeItem from "../../components/NoticeItem";
     import SectionTitle from "./SectionTitle";
     import SectionContent from "./SectionContent";
-    import newsSamplePic1 from '../../assets/news_sample1.jpg'
-    import newsSamplePic2 from '../../assets/news_sample2.jpg'
+    import {getSelfAdaptionArticle} from "../../API";
 
     export default {
         name: "NewsSection",
         components: {SectionContent, SectionTitle, NoticeItem, NewsDisplayBox, PreviewBox, MyHr},
+        created(){
+            getSelfAdaptionArticle(2,0,1,2).then(list=>{
+                this.newsItems = list
+            })
+            getSelfAdaptionArticle(3,0,1,8).then(list=>{
+                this.noticeItems = list
+            })
+        },
         data(){
             return{
-                newsSamplePic2,
-                newsSamplePic1
+                newsItems:[],
+                noticeItems:[]
             }
         }
     }

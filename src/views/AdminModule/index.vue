@@ -9,7 +9,7 @@
             <div v-if="currentModule.subModules">
                 <router-view/>
             </div>
-            <self-adaption-article-list v-else :type="type" :sub-type="0"/>
+            <no-self-adaption-article-list v-else :type="type" :sub-type="0"/>
         </div>
     </div>
 </template>
@@ -17,10 +17,11 @@
 <script>
     import path from 'path'
     import SelfAdaptionArticleList from "../../components/detail/SelfAdaptionArticleList";
+    import NoSelfAdaptionArticleList from "../../components/detail/NoSelfAdaptionArticleList";
 
     export default {
         name: "index",
-        components: {SelfAdaptionArticleList},
+        components: {NoSelfAdaptionArticleList, SelfAdaptionArticleList},
         data() {
             return {
                 path

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="display: flex">
+        <div style="display: flex;flex-wrap: wrap">
             <rotation-display-card @needUpdate="updateList" v-for="rotation in rotationList" :key="rotation.id" v-bind="rotation"/>
         </div>
         <div>
@@ -10,7 +10,7 @@
                     @click="$router.push('/admin/rotation/add')">添加
             </el-button>
         </div>
-        <router-view/>
+        <router-view @needUpdate="updateList"/>
     </div>
 </template>
 
@@ -27,12 +27,7 @@
         },
         data() {
             return {
-                rotationList: [{
-                    id: testImg,
-                    title: 'title',
-                    subTitle: 'subtitle',
-                    link: 'http://baidu.com',
-                }]
+                rotationList: []
             }
         },
         methods: {
@@ -40,7 +35,7 @@
                 getRotationList().then(rotationList => {
                     this.rotationList = rotationList
                 })
-            }
+            },
         },
     }
 </script>

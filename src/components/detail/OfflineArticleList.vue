@@ -3,13 +3,13 @@
         <div v-if="!isShowingArticle">
             <article-sketch v-for="article in articleList" :key="article.id" v-bind="article"/>
             <pagination
-                    :total-page="6"
+                    :total-page="Math.min(totalPage,pageSize)"
                     :current-page="currentPage"
                     @navigate="navigate"
             />
         </div>
         <div v-else>
-            <router-view/>
+            <router-view @needUpdate="$emit('needUpdate')"/>
         </div>
     </div>
 </template>

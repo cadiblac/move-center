@@ -4,31 +4,24 @@
             <i class="el-icon-loading" style="font-size: 3em"/>
         </div>
         <offline-article-list
-                v-else-if="responseType===1"
+                v-else
                 :current-page="currentPage"
                 :total-page="totalPage"
                 :page-size="pageSize"
-                :article-list="responseData.data"
+                :article-list="responseData"
                 @navigate="requestArticle"
                 @needUpdate="requestArticle"
         />
-        <offline-article v-else-if="responseType===2" v-bind="responseData.data"/>
     </div>
 </template>
 
 <script>
     import OfflineArticleList from "./OfflineArticleList";
-    import OfflineArticle from "./OfflineArticle";
     import {getSelfAdaptionArticle} from "../../API";
 
-    /***
-     * 通过type请求然后动态判断是列表还是文章
-     * 自适应显示文章、文章列表
-     */
-
     export default {
-        name: "SelfAdaptionArticleList",
-        components: {OfflineArticle, OfflineArticleList},
+        name: "NoSelfAdaptionArticleList",
+        components: {OfflineArticleList},
         props: {
             type: {
                 type: Number,
@@ -39,11 +32,14 @@
                 default: 0
             }
         },
+        created() {
+            this.requestArticle(this.currentPage)
+        },
         data() {
             return {
                 responseType: 0,//0 等待中 1列表2文章
                 // 请求返回的数据
-                responseData: null,
+                responseData: [],
 
 
                 // 分页相关信息（如果有的话）
@@ -52,30 +48,38 @@
                 totalPage: 1
             }
         },
-        beforeRouteEnter (){
-            alert('ok')
-        },
-        watch:{
-            type(){
+        watch: {
+            type() {
                 this.requestArticle(this.currentPage)
             },
-            subType(){
+            subType() {
                 this.requestArticle(this.currentPage)
             },
         },
-        methods:{
-            requestArticle(page){
+        methods: {
+            requestArticle(page=1) {
 
                 getSelfAdaptionArticle(this.type, this.subType, page, this.pageSize)
                     .then(response => {
-                        this.responseType = response.type
-                        this.responseData = response
+                        // 没有文章的情况
+                        if (!response.count) {
+                            this.responseData = []
+                            return
 
-                        // 列表
-                        if (response.type === 1) {
-                            this.totalPage = Math.ceil(this.responseData.count / this.pageSize)
+                        }
+
+
+                        this.responseType = response.type
+                        if (response.type === 2) {
+                            this.responseData = [response.data]
+                            this.totalPage = 1
+                            this.currentPage = 1
+                        } else {
+                            this.responseData = response.data
+                            this.totalPage = Math.ceil(response.count / this.pageSize)
                             this.currentPage = page
                         }
+
                     })
             }
         },

@@ -1,11 +1,11 @@
 <template>
-    <div :class="['slider-item',show?'':'hidden']">
+    <a :href="link" target="_blank" :class="['slider-item',show?'':'hidden']">
         <img class="background" :src="backgroundImage">
         <div class="content">
             <h1 class="title">{{title}}</h1>
             <h2 class="sub-title">{{subTitle}}</h2>
         </div>
-    </div>
+    </a>
 </template>
 
 <script>
@@ -15,13 +15,15 @@
             title: '',
             subTitle: '',
             backgroundImage: null,
-            show: true
+            show: true,
+            link:''
         }
     }
 </script>
 
 <style scoped>
     .slider-item {
+        display: block;
         position: absolute;
         left: 0;
         top: 0;

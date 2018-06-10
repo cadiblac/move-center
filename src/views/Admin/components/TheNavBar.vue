@@ -19,12 +19,6 @@
         <el-menu-item :index="path.join('/admin','rotation')">
             <span slot="title">首页轮播图管理</span>
         </el-menu-item>
-        <el-menu-item index="3" disabled>
-            <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-            <span slot="title">导航四</span>
-        </el-menu-item>
     </el-menu>
 </template>
 

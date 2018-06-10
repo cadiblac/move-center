@@ -1,6 +1,6 @@
 <template>
     <el-card :body-style="{ padding: '0px' }" class="card">
-        <img :src="imageUrl" class="image">
+        <img :src="imageUrl" class="image"/>
         <div style="padding: 14px;">
             <h1>标题：{{title}}</h1>
             <h2>子标题：{{ subTitle }}</h2>

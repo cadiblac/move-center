@@ -8,6 +8,7 @@
                 :title="item.title"
                 :subTitle="item.subTitle"
                 :backgroundImage="item.backgroundImage"
+                :link="item.link"
                 :show="curDisplayedItemIndex===index"
         />
     </div>

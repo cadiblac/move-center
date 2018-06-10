@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <the-nav-bar id="nav-bar"/>
-        <slider id="banner-slider" :displayedItems="testItems"/>
+        <slider id="banner-slider" :displayedItems="sliderItems" v-if="sliderItems.length>=1"/>
         <news-section/>
         <experts-section/>
         <research-section/>
@@ -18,6 +18,7 @@
     import NewsSection from "./NewsSection";
     import ExpertsSection from "./ExpertsSection";
     import ResearchSection from "./ResearchSection";
+    import {getResourceUrl, getRotationList} from "../../API";
 
     export default {
         name: 'home',
@@ -27,20 +28,19 @@
             NewsSection,
             TheFooter, TheNavBar, Slider
         },
+        created() {
+            getRotationList().then(list => list.map(item => ({
+                title: item.title,
+                subTitle: item.subTitle,
+                backgroundImage: getResourceUrl(item.id),
+                link: item.link
+            }))).then(list => {
+                this.sliderItems = list
+            })
+        },
         data() {
             return {
-                testItems: [
-                    {
-                        title: 'test1',
-                        subTitle: 'test2',
-                        backgroundImage: pic1
-                    },
-                    {
-                        title: 'test1',
-                        subTitle: 'test2',
-                        backgroundImage: pic2
-                    }
-                ],
+                sliderItems: [],
             }
         }
     }

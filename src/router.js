@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
 import Article from './components/detail/MyArticle'
-import AdminArticle from './components/admin/AdminArticle'
 import moduleInfos from './moduleInfos'
 import Category from './views/Category'
 import CategoryWithModule from './views/CategoryWithModule'
@@ -14,8 +13,11 @@ import Admin from './views/Admin'
 import AdminLayout from './views/AdminLayout'
 import AdminCategory from './views/AdminCategory'
 import AdminModule from './views/AdminModule'
+import AdminSubmodule from './views/AdminSubmodule'
 import AdminRotation from './views/AdminRotation'
 import RotationAddCard from './views/AdminRotation/components/RotationAddCard'
+import AdminArticleAdd from './components/admin/AdminArticleAdd'
+import AdminArticleUpdate from './components/admin/AdminArticleUpdate'
 
 
 import path from 'path'
@@ -34,7 +36,7 @@ let articleRoute = {
 
 }
 let adminArticleRoute = Object.assign({},articleRoute,{
-    component:AdminArticle
+    component:AdminArticleUpdate
 })
 
 // 有单个、多个模块的目录
@@ -60,7 +62,7 @@ let adminRoute = {
             children: [
                 {
                     path:'add',
-                    component:AdminArticle
+                    component:AdminArticleAdd
                 },
 
                 ...moduleInfos.map(category => ({
@@ -95,7 +97,7 @@ let adminRoute = {
                                 subType: subModule.subType,
                                 routeNavName: subModule.name
                             },
-                            component: SubModule,
+                            component: AdminSubmodule,
                             children: [adminArticleRoute]
                         })) : [adminArticleRoute]
                     }))
@@ -202,8 +204,9 @@ let routes = [
 
     {
         path: '/',
-        redirect: '/admin'
+        redirect: '/home'
     },
+
 ]
 export default new Router({
     routes

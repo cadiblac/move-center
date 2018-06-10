@@ -7,24 +7,10 @@
         <section-content>
             <div class="expert-group">
                 <expert-display-box
-                        :profile="experts1"
-                        name="李树忱"
-                        introduction="土建与水利学院副院长，现任地下工程系教授、博士生导师。担任中国岩石力学与工程学会地下工程分会..."
-                />
-                <expert-display-box
-                        :profile="experts1"
-                        name="李树忱"
-                        introduction="土建与水利学院副院长，现任地下工程系教授、博士生导师。担任中国岩石力学与工程学会地下工程分会..."
-                />
-                <expert-display-box
-                        :profile="experts1"
-                        name="李树忱"
-                        introduction="土建与水利学院副院长，现任地下工程系教授、博士生导师。担任中国岩石力学与工程学会地下工程分会..."
-                />
-                <expert-display-box
-                        :profile="experts1"
-                        name="李树忱"
-                        introduction="土建与水利学院副院长，现任地下工程系教授、博士生导师。担任中国岩石力学与工程学会地下工程分会..."
+                        v-for="expertItem in expertItems"
+                        :profile="expertItem.face"
+                        :name="expertItem.title"
+                        :introduction="expertItem.summary"
                 />
             </div>
             <template slot="more">
@@ -35,18 +21,23 @@
 </template>
 
 <script>
-    import experts1 from '../../assets/experts_1.jpg'
     import SectionContent from "./SectionContent";
     import SectionTitle from "./SectionTitle";
     import BlueButton from "../../components/BlueButton";
     import ExpertDisplayBox from "../../components/ExpertDisplayBox";
+    import {getSelfAdaptionArticle} from "../../API";
 
     export default {
         name: "ExpertsSection",
         components: {ExpertDisplayBox, BlueButton, SectionTitle, SectionContent},
+        created(){
+            getSelfAdaptionArticle(7,0,1,4).then(list=>{
+                this.expertItems = list
+            })
+        },
         data(){
             return{
-                experts1
+                expertItems:[]
             }
         }
     }
