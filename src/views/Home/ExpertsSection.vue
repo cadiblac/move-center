@@ -11,10 +11,11 @@
                         :profile="expertItem.face"
                         :name="expertItem.title"
                         :introduction="expertItem.summary"
+                        :id="expertItem.id"
                 />
             </div>
             <template slot="more">
-                <blue-button>更多专家资源</blue-button>
+                <blue-button @click="$router.push('/experts/all')">更多专家资源</blue-button>
             </template>
         </section-content>
     </section>
@@ -38,6 +39,11 @@
         data(){
             return{
                 expertItems:[]
+            }
+        },
+        methods:{
+            test(){
+                console.log('test')
             }
         }
     }

@@ -1,18 +1,18 @@
 <template>
     <div>
-        <div style="text-align: center" v-if="responseType===0">
+        <div style="text-align: center" v-if="loading">
             <i class="el-icon-loading" style="font-size: 3em"/>
         </div>
         <offline-article-list
-                v-else-if="responseType===1"
+                v-else-if="responseData.length>1"
                 :current-page="currentPage"
                 :total-page="totalPage"
                 :page-size="pageSize"
-                :article-list="responseData.data"
+                :article-list="responseData"
                 @navigate="requestArticle"
                 @needUpdate="requestArticle"
         />
-        <offline-article v-else-if="responseType===2" v-bind="responseData.data"/>
+        <offline-article v-else-if="responseData.length===1" v-bind="responseData"/>
     </div>
 </template>
 
@@ -29,6 +29,9 @@
     export default {
         name: "SelfAdaptionArticleList",
         components: {OfflineArticle, OfflineArticleList},
+        created(){
+            this.requestArticle()
+        },
         props: {
             type: {
                 type: Number,
@@ -41,9 +44,9 @@
         },
         data() {
             return {
-                responseType: 0,//0 等待中 1列表2文章
+                loading: true,
                 // 请求返回的数据
-                responseData: null,
+                responseData: [],
 
 
                 // 分页相关信息（如果有的话）
@@ -52,30 +55,25 @@
                 totalPage: 1
             }
         },
-        beforeRouteEnter (){
-            alert('ok')
-        },
-        watch:{
-            type(){
+        watch: {
+            type() {
                 this.requestArticle(this.currentPage)
             },
-            subType(){
+            subType() {
                 this.requestArticle(this.currentPage)
             },
         },
-        methods:{
-            requestArticle(page){
+        methods: {
+            requestArticle(page=1) {
 
                 getSelfAdaptionArticle(this.type, this.subType, page, this.pageSize)
                     .then(response => {
-                        this.responseType = response.type
+                        this.loading = false
                         this.responseData = response
 
-                        // 列表
-                        if (response.type === 1) {
-                            this.totalPage = Math.ceil(this.responseData.count / this.pageSize)
-                            this.currentPage = page
-                        }
+                        this.totalPage = Math.ceil(this.responseData.length / this.pageSize)
+                        this.currentPage = page
+
                     })
             }
         },

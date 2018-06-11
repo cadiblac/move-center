@@ -11,7 +11,7 @@
         components: {OfflineArticle},
         created() {
             getArticleById(this.id).then(article => {
-                Object.assign(this.article, article)
+                this.article = article
             })
         },
         props: {
@@ -22,8 +22,7 @@
         },
         data() {
             return {
-                article: {
-                }
+                article: {}
             }
         }
     }

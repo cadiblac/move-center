@@ -19,7 +19,7 @@
             author: String,
             face: String,
             summary: String,
-            date: Number,
+            date: String,
             visit: Number,
             content: String,
             from: String,

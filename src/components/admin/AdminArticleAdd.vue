@@ -116,34 +116,40 @@
                 let faceForm = new FormData()
                 faceForm.append('file', this.faceImg)
                 uploadImage(faceForm).then(id => {
-                    addArticle({
-                        author: this.author,
-                        title: this.title,
-                        plainContent: this.plainContent,
-                        type: this.selectedOptions[1],
-                        subType: this.selectedOptions[2] ? this.selectedOptions[2] : 0,
-                        from: this.from,
-                        content: this.content,
-                        date: this.date,
-                        face: id,
-                        annex: ''
-                    }).then(
-                        () => {
-                            this.$emit('needUpdate')
-                            this.$message({
-                                type: 'success',
-                                message: '发表成功'
-                            });
-                            this.$router.go(-1)
-                        },
-                        e => {
-                            this.$message({
-                                type: 'danger',
-                                message: '失败：' + e.message
-                            });
-                        }
-                    )
-                }).then(() => {
+                        addArticle({
+                            author: this.author,
+                            title: this.title,
+                            plainContent: this.plainContent,
+                            type: this.selectedOptions[1],
+                            subType: this.selectedOptions[2] ? this.selectedOptions[2] : 0,
+                            from: this.from,
+                            content: this.content,
+                            date: this.date,
+                            face: id,
+                            annex: ''
+                        }).then(
+                            () => {
+                                this.$emit('needUpdate')
+                                this.$message({
+                                    type: 'success',
+                                    message: '发表成功'
+                                });
+                                this.$router.go(-1)
+                            },
+                            e => {
+                                this.$message({
+                                    type: 'danger',
+                                    message: '失败：' + e.message
+                                });
+                            }
+                        )
+                    },
+                    e => {
+                        this.$message({
+                            type: 'danger',
+                            message: '失败：' + e.message
+                        });
+                    }).then(() => {
                     this.submitting = false
                 })
             },

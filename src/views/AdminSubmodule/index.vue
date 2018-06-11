@@ -1,5 +1,5 @@
 <template>
-    <no-self-adaption-article-list v-else :type="type" :sub-type="0"/>
+    <no-self-adaption-article-list v-else :type="type" :sub-type="subType"/>
 </template>
 
 <script>

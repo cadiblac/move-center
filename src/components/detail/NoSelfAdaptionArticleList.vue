@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="text-align: center" v-if="responseType===0">
+        <div style="text-align: center" v-if="loading">
             <i class="el-icon-loading" style="font-size: 3em"/>
         </div>
         <offline-article-list
@@ -37,7 +37,7 @@
         },
         data() {
             return {
-                responseType: 0,//0 等待中 1列表2文章
+                loading: true,
                 // 请求返回的数据
                 responseData: [],
 
@@ -57,29 +57,14 @@
             },
         },
         methods: {
-            requestArticle(page=1) {
+            requestArticle(page = 1) {
 
                 getSelfAdaptionArticle(this.type, this.subType, page, this.pageSize)
                     .then(response => {
-                        // 没有文章的情况
-                        if (!response.count) {
-                            this.responseData = []
-                            return
-
-                        }
-
-
-                        this.responseType = response.type
-                        if (response.type === 2) {
-                            this.responseData = [response.data]
-                            this.totalPage = 1
-                            this.currentPage = 1
-                        } else {
-                            this.responseData = response.data
-                            this.totalPage = Math.ceil(response.count / this.pageSize)
-                            this.currentPage = page
-                        }
-
+                        this.loading = false
+                        this.responseData = response
+                        this.totalPage = Math.ceil(response.length / this.pageSize)
+                        this.currentPage = page
                     })
             }
         },

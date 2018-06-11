@@ -16,14 +16,13 @@
                     来源:{{from||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;
                 </p>
             </div>
-            <img class="right" :src="faceUrl">
+            <img class="right" :src="face">
         </div>
     </div>
 </template>
 
 <script>
     import {dateUtils} from "../../util";
-    import {getResourceUrl} from "../../API";
     import path from 'path'
 
     export default {
@@ -49,9 +48,6 @@
                 let day = new Date(this.date).getDay()
                 return day < 10 ? '0' + day : String(day)
             },
-            faceUrl() {
-                return getResourceUrl(this.face)
-            }
         },
         methods: {
             getMonthEngWord: dateUtils.getMonthEngWord,

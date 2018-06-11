@@ -7,6 +7,7 @@ import Category from './views/Category'
 import CategoryWithModule from './views/CategoryWithModule'
 import Module from './views/Module'
 import SubModule from './views/SubModule'
+import EmptyLayout from './views/EmptyLayout'
 
 // 后台管理
 import Admin from './views/Admin'
@@ -35,8 +36,8 @@ let articleRoute = {
     props: route => ({id: Number(route.params.id)})
 
 }
-let adminArticleRoute = Object.assign({},articleRoute,{
-    component:AdminArticleUpdate
+let adminArticleRoute = Object.assign({}, articleRoute, {
+    component: AdminArticleUpdate
 })
 
 // 有单个、多个模块的目录
@@ -46,7 +47,7 @@ let singleModuleCategory = moduleInfos.filter(category => category.modules.lengt
 let adminRoute = {
     path: '/admin',
     component: Admin,
-    meta:{
+    meta: {
         routeNavName: '后台管理'
     },
     children: [
@@ -56,13 +57,13 @@ let adminRoute = {
             props: {
                 title: '模块管理'
             },
-            meta:{
+            meta: {
                 routeNavName: '模块管理'
             },
             children: [
                 {
-                    path:'add',
-                    component:AdminArticleAdd
+                    path: 'add',
+                    component: AdminArticleAdd
                 },
 
                 ...moduleInfos.map(category => ({
@@ -107,18 +108,18 @@ let adminRoute = {
             ]
         },
         {
-            path:'rotation',
-            component:AdminRotation,
-            props:{
-                title:'轮播图管理'
+            path: 'rotation',
+            component: AdminRotation,
+            props: {
+                title: '轮播图管理'
             },
-            meta:{
+            meta: {
                 routeNavName: '轮播图管理'
             },
-            children:[
+            children: [
                 {
-                    path:'add',
-                    component:RotationAddCard
+                    path: 'add',
+                    component: RotationAddCard
                 }
             ]
 
@@ -157,16 +158,23 @@ let routes = [
             props: {
                 type: module.type,
             },
-            children: module.subModules ? module.subModules.map(subModule => ({
-                path: subModule.path,
-                meta: {
-                    currentSubModule: subModule,
-                    subType: subModule.subType,
-                    routeNavName: subModule.name
-                },
-                component: SubModule,
-                children: [articleRoute]
-            })) : [articleRoute]
+            children: module.subModules ? [
+                ...module.subModules.map(subModule => ({
+                    path: subModule.path,
+                    meta: {
+                        currentSubModule: subModule,
+                        subType: subModule.subType,
+                        routeNavName: subModule.name
+                    },
+                    component: SubModule,
+                    children: [articleRoute]
+                })),
+                {
+                    path: 'any',
+                    meta: {},
+                    component: EmptyLayout,
+                    children: [articleRoute]
+                }] : [articleRoute]
         }))
 
     })),
@@ -185,16 +193,23 @@ let routes = [
 
             component: CategoryWithModule,
 
-            children: module.subModules ? module.subModules.map(subModule => ({
-                path: subModule.path,
-                meta: {
-                    currentSubModule: subModule,
-                    subType: subModule.subType,
-                    routeNavName: subModule.name
-                },
-                component: SubModule,
-                children: [articleRoute]
-            })) : [articleRoute]
+            children: module.subModules ? [
+                ...module.subModules.map(subModule => ({
+                    path: subModule.path,
+                    meta: {
+                        currentSubModule: subModule,
+                        subType: subModule.subType,
+                        routeNavName: subModule.name
+                    },
+                    component: SubModule,
+                    children: [articleRoute]
+                })),
+                {
+                    path: 'any',
+                    meta: {},
+                    component: EmptyLayout,
+                    children: [articleRoute]
+                }] : [articleRoute]
 
 
         }

@@ -1,17 +1,22 @@
 <template>
-    <div class="expert-display-box">
+    <router-link :to="`/experts/${id}`" class="expert-display-box">
         <img class="expert-display-box__profile" :src="profile">
         <div class="expert-display-box__content">
             <h1 class="name"><span class="inner-name">{{name}}</span></h1>
             <p class="introduction">{{introduction}}</p>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
     export default {
         name: "ExpertDisplayBox",
         props:{
+            // id
+            id:{
+                type:Number,
+                required:true
+            },
             // 图片
             profile:{
                 type:String,

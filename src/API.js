@@ -36,10 +36,11 @@ let handleStatus = response => {
 
 // 文章
 const handleSelfAdaptionArticle = data => {
-    // 无文章
-    if (!data.count) return []
+    if (!data.data) return []
     // 单文章
     if (data.type === 2) return [data.data]
+    // 无文章
+    if (!data.count) return []
     // 文章列表
     return data.data
 }
@@ -71,12 +72,14 @@ export function getSelfAdaptionArticle(type, subType, page, rows) {
         .then(handleStatus)
         .then(handleSelfAdaptionArticle)
         .then(articleList => Promise.all(articleList.map(handleArticle)))
+
 }
 
 
 export function getArticleById(id) {
 
-    return server.get('article/getById', {params: {id}}).then(handleStatus)
+    return server.get('article/getById', {params: {id}})
+        .then(handleStatus)
 }
 
 export function addArticle(bundle) {
