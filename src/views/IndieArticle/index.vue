@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav-bar2 search-bar-place-holder="搜索相关信息"/>
+        <nav-bar2/>
         <div class="article-container"><my-article :id="id"/></div>
         <the-footer/>
     </div>

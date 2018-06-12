@@ -94,6 +94,10 @@ export function deleteArticle(id) {
     return server.post('article/delete', qs.stringify({id})).then(handleStatus)
 }
 
+export function searchArticle(key,page=1,rows=10) {
+    return server.post('article/search', qs.stringify({key})).then(handleStatus)
+}
+
 /*静态资源*/
 export const imageUploadUrl = BASE_URL + 'article/upload'
 

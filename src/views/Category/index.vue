@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav-bar2 search-bar-place-holder="搜索相关信息"/>
+        <nav-bar2/>
         <section class="content">
             <my-breadcrumb/>
             <page-title>{{title}}</page-title>

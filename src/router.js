@@ -8,6 +8,8 @@ import CategoryWithModule from './views/CategoryWithModule'
 import Module from './views/Module'
 import SubModule from './views/SubModule'
 import EmptyLayout from './views/EmptyLayout'
+import SerachPage from './views/SerachPage'
+import IndieArticle from './views/IndieArticle'
 
 // 后台管理
 import Admin from './views/Admin'
@@ -216,6 +218,25 @@ let routes = [
     }),
 
     adminRoute,
+
+    {
+        path:'/search/:keyWord',
+        component:SerachPage,
+        meta:{
+            routeNavName:'搜索页面',
+            title:'搜索页面'
+        },
+        props:true
+    },
+    {
+        path:'/article/:id',
+        component:IndieArticle,
+        meta:{
+            routeNavName:'文章页面',
+            title:'文章页面'
+        },
+        props:true
+    },
 
     {
         path: '/',

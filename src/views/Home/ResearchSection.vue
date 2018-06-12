@@ -18,9 +18,9 @@
             </el-menu>
             <div class="research-display-box-wrapper" style="font-size: .9em">
                 <research-display-box
-                        v-for="article in displayingBoxes"
+                        v-for="article in displayingBoxes[curIndex]"
                         :key="article.id"
-                        :photo="getResourceUrl(article.face)"
+                        :photo="article.face"
                         :title="article.title"
                         title-eng=""
                         :content="article.summary"
@@ -47,23 +47,32 @@
     import SectionContent from "./SectionContent";
     import BlueButton from "../../components/BlueButton";
     import ResearchDisplayBox from "../../components/ResearchDisplayBox";
-    import research1 from '../../assets/research_1.jpg'
-    import {getResourceUrl} from "../../API";
+    import {getSelfAdaptionArticle} from "../../API";
 
     export default {
         name: "ResearchSection",
         components: {ResearchDisplayBox, BlueButton, SectionContent, MyHr, SectionTitle},
+        created() {
+            this.requestArticle()
+        },
         data() {
             return {
-                research1,
                 displayingBoxes: [],
-                curIndex: '0'
+                curIndex: '0',
+                type: [4, 5, 6]
             }
         },
         methods: {
-            getResourceUrl,
             handleSelect(i) {
                 this.curIndex = i
+                this.requestArticle()
+            },
+            // 请求curIndex对应module的文章
+            requestArticle() {
+                getSelfAdaptionArticle(this.type[this.curIndex], 0, 1, 3)
+                    .then(articleList => {
+                        this.displayingBoxes = articleList
+                    })
             }
         }
     }

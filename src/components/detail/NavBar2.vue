@@ -1,22 +1,15 @@
 <template>
     <nav class="nav-bar">
         <router-link to="/"><img src="../../assets/logo.png" class="logo"/></router-link>
-        <el-input
-                style="width: 200px;"
-                :placeholder="searchBarPlaceHolder"
-                suffix-icon="el-icon-search"/>
+        <search-bar/>
     </nav>
 </template>
 
 <script>
+    import SearchBar from "../SearchBar";
     export default {
         name: "NavBar2",
-        props: {
-            searchBarPlaceHolder: {
-                type: String,
-                default: ""
-            }
-        }
+        components: {SearchBar},
     }
 </script>
 
