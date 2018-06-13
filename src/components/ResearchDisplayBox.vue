@@ -1,5 +1,5 @@
 <template>
-    <div class="research-display-box" :style="{backgroundImage:`url(${photo})`}">
+    <div class="research-display-box" :style="{backgroundImage:`url(${photo})`}" @click="$emit('click')">
         <div class="content-wrapper">
             <div class="title">
                 <span class="title-chs">{{title}}</span>

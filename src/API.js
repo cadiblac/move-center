@@ -49,10 +49,19 @@ const handleArticle = data => {
         // 处理图片链接
         data.face = getResourceUrl(data.face)
         // 处理附件
-        if (!data.annex || data.annex.length === 0)
+        if (!data.annex) {
+            data.annex = []
             resolve(data)
-        else {
-            Promise.all(data.annex.split(',').map(id => getAnnex(id)))
+        } else if (data.annex.length === 0) {
+            resolve(data)
+        } else {
+            Promise.all(data.annex.split(',').map(id => getAnnex(id).then(res => {
+                console.log(res)
+
+                return {
+                    name: res.name, id
+                }
+            })))
                 .then(annexList => {
                     data.annex = annexList
                     resolve(data)
@@ -80,6 +89,7 @@ export function getArticleById(id) {
 
     return server.get('article/getById', {params: {id}})
         .then(handleStatus)
+        .then(handleArticle)
 }
 
 export function addArticle(bundle) {
@@ -94,8 +104,12 @@ export function deleteArticle(id) {
     return server.post('article/delete', qs.stringify({id})).then(handleStatus)
 }
 
-export function searchArticle(key,page=1,rows=10) {
-    return server.post('article/search', qs.stringify({key})).then(handleStatus)
+export function searchArticle(key, page = 1, rows = 10) {
+    return server.get('article/search', {
+        params: {
+            key, page, rows
+        }
+    }).then(handleStatus)
 }
 
 /*静态资源*/
@@ -105,8 +119,10 @@ export function getResourceUrl(sourceId) {
     return RESOURCE_URL + sourceId
 }
 
-export function uploadImage(data) {
-    return server.post(imageUploadUrl, data).then(res => res.data.data)
+export function uploadImage(img) {
+    let form = new FormData()
+    form.append('file', img)
+    return server.post(imageUploadUrl, form).then(res => res.data.data)
 
 }
 
@@ -134,13 +150,17 @@ export function getAnnex(id) {
         params: {
             id
         }
-    })
+    }).then(handleStatus)
 }
 
-export function uploadAnnex(form) {
+export function uploadAnnex(file) {
+    let form = new FormData()
+    form.append('file', file)
     return server.post('download/upload', form).then(handleStatus)
 }
 
 export function deleteAnnex(id) {
     return server.post('download/delete', qs.stringify({id})).then(handleStatus)
 }
+
+export const annexUploadUrl = BASE_URL + 'download/upload'

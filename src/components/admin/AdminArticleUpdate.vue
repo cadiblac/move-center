@@ -41,6 +41,9 @@
                               :options="editorOption">
                 </quill-editor>
             </el-form-item>
+            <el-form-item label="上传附件">
+                <annex-manager ref="annexManager" :annex-existed="annex" @delete="deleteAnnex"/>
+            </el-form-item>
             <el-form-item>
                 <el-button @click="cancel">返回</el-button>
                 <el-button type="primary" @click="onSubmit" :disabled="submitting">修改文章</el-button>
@@ -51,20 +54,24 @@
 </template>
 
 <script>
-    import {getArticleById, uploadImage, updateArticle, deleteArticle, getResourceUrl} from "../../API";
+    import {getArticleById, uploadImage, updateArticle, deleteArticle, getResourceUrl, uploadAnnex} from "../../API";
     import moduleInfos from '../../moduleInfos'
     import {dateUtils} from "../../util";
+    import AnnexManager from "./AnnexManager";
 
     export default {
         name: "AdminArticleUpdate",
+        components: {AnnexManager},
         created() {
             getArticleById(this.id).then(article => {
+                console.log(article)
                 this.title = article.title
                 this.content = article.content
                 this.author = article.author
                 this.face = article.face
                 this.from = article.from
                 this.date = article.date
+                this.annex = article.annex
             })
         },
         props: {
@@ -100,6 +107,7 @@
                 plainContent: '',
                 date: dateUtils.format(new Date(), 'yyyy-MM-dd'),
                 from: '',
+                annex: [],
 
 
                 face: undefined,
@@ -127,6 +135,11 @@
         methods: {
             cancel() {
                 this.$router.go(-1)
+            },
+            deleteAnnex(id) {
+                let index = this.annex.findIndex(annex => annex.id === id)
+                if (index === -1) return
+                this.annex.splice(index, 1)
             },
             onDelete() {
                 this.$confirm('即将删除, 是否继续?', '提示', {
@@ -168,9 +181,9 @@
                     })
                 }
 
-
-                pipeline.then(
-                    () => updateArticle({
+                pipeline = pipeline
+                    .then(() => Promise.all(this.$refs.annexManager.annexList.map(annex => uploadAnnex(annex))))
+                    .then(ids => updateArticle({
                         id: this.id,
                         author: this.author,
                         title: this.title,
@@ -181,8 +194,9 @@
                         content: this.content,
                         date: this.date,
                         face: this.face,
-                        annex: ''
-                    }).then(
+                        annex: this.annex.map(annex => annex.id).concat(ids).join(',')
+                    }))
+                    .then(
                         () => {
                             this.$emit('needUpdate')
                             this.$message({
@@ -198,9 +212,11 @@
                             });
                         }
                     )
-                ).then(() => {
-                    this.submitting = false
-                })
+                    .then(() => {
+                        this.submitting = false
+                    })
+
+
             },
             handleFaceUploaderChange(e) {
                 if (!e.target.files) return

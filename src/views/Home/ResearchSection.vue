@@ -18,7 +18,8 @@
             </el-menu>
             <div class="research-display-box-wrapper" style="font-size: .9em">
                 <research-display-box
-                        v-for="article in displayingBoxes[curIndex]"
+                        @click="$router.push(`/article/${article.id}`)"
+                        v-for="article in displayingBoxes"
                         :key="article.id"
                         :photo="article.face"
                         :title="article.title"
@@ -73,6 +74,9 @@
                     .then(articleList => {
                         this.displayingBoxes = articleList
                     })
+            },
+            test(){
+                console.log('test')
             }
         }
     }

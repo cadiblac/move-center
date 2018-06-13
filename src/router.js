@@ -220,22 +220,22 @@ let routes = [
     adminRoute,
 
     {
-        path:'/search/:keyWord',
-        component:SerachPage,
-        meta:{
-            routeNavName:'搜索页面',
-            title:'搜索页面'
+        path: '/search/:keyWord',
+        component: SerachPage,
+        meta: {
+            routeNavName: '搜索页面',
+            title: '搜索页面'
         },
-        props:true
+        props: true
     },
     {
-        path:'/article/:id',
-        component:IndieArticle,
-        meta:{
-            routeNavName:'文章页面',
-            title:'文章页面'
+        path: '/article/:id',
+        component: IndieArticle,
+        meta: {
+            routeNavName: '文章页面',
+            title: '文章页面'
         },
-        props:true
+        props: (route) => ({id: Number(route.params.id)})
     },
 
     {
