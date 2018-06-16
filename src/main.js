@@ -11,10 +11,27 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 Vue.use(VueQuillEditor, /* { default global options } */)
 
+import {loggedIn} from "./API";
+
 Vue.config.productionTip = false
 
 
 Vue.use(ElementUI);
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!loggedIn()) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else {
+        next() // 确保一定要调用 next()
+    }
+})
 
 new Vue({
     router,

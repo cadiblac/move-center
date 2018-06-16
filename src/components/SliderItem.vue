@@ -35,6 +35,7 @@
     }
 
     .slider-item.hidden {
+        pointer-events: none;
         opacity: 0;
     }
 

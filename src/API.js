@@ -1,12 +1,9 @@
 import axios from 'axios'
-import {generateArticle, generateArticleList} from "./mockServer";
-import path from 'path'
 import qs from 'qs'
 
-// const BASE_URL = '/api/v1/'
-const BASE_URL = 'http://m.wangjingxin.top:22223/move/api/v1/'
+const BASE_URL = '/move/api/v1/'
 
-const RESOURCE_URL = 'http://m.wangjingxin.top:22223/resource/'
+const RESOURCE_URL = '/resource/'
 
 class PermissionDeniedError extends Error {
     constructor(message) {
@@ -113,7 +110,7 @@ export function searchArticle(key, page = 1, rows = 10) {
 
 
 /*静态资源*/
-export const imageUploadUrl = BASE_URL + 'article/upload'
+// export const imageUploadUrl = BASE_URL + 'article/upload'
 
 export function getResourceUrl(sourceId) {
     return RESOURCE_URL + sourceId
@@ -122,7 +119,7 @@ export function getResourceUrl(sourceId) {
 export function uploadImage(img) {
     let form = new FormData()
     form.append('file', img)
-    return server.post(imageUploadUrl, form).then(res => res.data.data)
+    return server.post('article/upload', form).then(res => res.data.data)
 
 }
 
@@ -166,5 +163,28 @@ export function deleteAnnex(id) {
 export const annexUploadUrl = BASE_URL + 'download/upload'
 
 export function getAnnexDownloadUrl(id) {
-    return `http://m.wangjingxin.top:22223/move/api/v1/download/get?id=${id}`
+    return BASE_URL+`download/get?id=${id}`
+}
+
+/*权限*/
+export function login(loginForm) {
+    return server.post('link/login',qs.stringify(loginForm)).then(handleStatus).then(success=>{
+        if (success) {
+            sessionStorage.setItem('loggedIn','true')
+        }else {
+            throw new Error('Error')
+        }
+    })
+}
+export function logout() {
+    return server.post('link/logout').then(handleStatus).then(success=>{
+        if (success) {
+            sessionStorage.setItem('loggedIn','false')
+        }
+    })
+}
+export function loggedIn() {
+    let s = sessionStorage.getItem('loggedIn')
+    if (s === 'true') return true
+    return false
 }

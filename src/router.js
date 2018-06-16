@@ -10,6 +10,7 @@ import SubModule from './views/SubModule'
 import EmptyLayout from './views/EmptyLayout'
 import SerachPage from './views/SerachPage'
 import IndieArticle from './views/IndieArticle'
+import Login from './views/Login'
 
 // 后台管理
 import Admin from './views/Admin'
@@ -50,7 +51,8 @@ let adminRoute = {
     path: '/admin',
     component: Admin,
     meta: {
-        routeNavName: '后台管理'
+        routeNavName: '后台管理',
+        requiresAuth:true
     },
     children: [
         {
@@ -239,12 +241,16 @@ let routes = [
     },
 
     {
+        path:'/login',
+        component:Login
+    },
+
+    {
         path: '/',
         redirect: '/home'
     },
 
 ]
-console.log(routes)
 export default new Router({
     routes
 })
