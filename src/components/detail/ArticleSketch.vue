@@ -16,7 +16,7 @@
                     来源:{{from||'未知'}}&nbsp;&nbsp;&nbsp;&nbsp;
                 </p>
             </div>
-            <img class="right" :src="face">
+            <img class="right" :src="face" v-if="face">
         </div>
     </div>
 </template>
@@ -88,7 +88,7 @@
             > .right {
                 flex-shrink: 0;
                 width: 200px;
-                height: 200px;
+                height: 150px;
 
                 object-fit: contain;
             }

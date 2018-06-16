@@ -1,9 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const BASE_URL = '/move/api/v1/'
-
-const RESOURCE_URL = '/resource/'
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/move/api/v1/' : 'http://103.202.110.58/move/api/v1/'
+const RESOURCE_URL = process.env.NODE_ENV === 'production' ? '/resource/' : 'http://103.202.110.58/resource/'
 
 class PermissionDeniedError extends Error {
     constructor(message) {
@@ -14,7 +13,7 @@ class PermissionDeniedError extends Error {
 
 let server = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000
+    timeout: 5000
 })
 
 // 处理请求状态  返回成功对象
@@ -33,13 +32,12 @@ let handleStatus = response => {
 
 // 文章
 const handleSelfAdaptionArticle = data => {
-    if (!data.data) return []
-    // 单文章
-    if (data.type === 2) return [data.data]
     // 无文章
-    if (!data.count) return []
+    if (data.count === 0) return {count: 0, data: []}
+    // 单文章
+    if (data.type === 2) return {count: 1, data: [data.data]}
     // 文章列表
-    return data.data
+    return {count: data.count, data: data.data}
 }
 const handleArticle = data => {
     return new Promise((resolve, reject) => {
@@ -47,7 +45,7 @@ const handleArticle = data => {
         data.faceId = data.face
         data.face = getResourceUrl(data.faceId)
         // 处理附件
-        if (!data.annex||data.annex.length === 0) {
+        if (!data.annex || data.annex.length === 0) {
             data.annex = []
             resolve(data)
         } else {
@@ -75,7 +73,11 @@ export function getSelfAdaptionArticle(type, subType, page, rows) {
     })
         .then(handleStatus)
         .then(handleSelfAdaptionArticle)
-        .then(articleList => Promise.all(articleList.map(handleArticle)))
+        .then(res => Promise.all(res.data.map(handleArticle)).then(articleList => ({
+                count: res.count,
+                articleList
+            }))
+        )
 
 }
 
@@ -108,11 +110,11 @@ export function searchArticle(key, page = 1, rows = 10) {
 }
 
 
-
 /*静态资源*/
-// export const imageUploadUrl = BASE_URL + 'article/upload'
+export const imageUploadUrl = BASE_URL + 'article/upload'
 
 export function getResourceUrl(sourceId) {
+    if (!sourceId) return null
     return RESOURCE_URL + sourceId
 }
 
@@ -163,26 +165,28 @@ export function deleteAnnex(id) {
 export const annexUploadUrl = BASE_URL + 'download/upload'
 
 export function getAnnexDownloadUrl(id) {
-    return BASE_URL+`download/get?id=${id}`
+    return BASE_URL + `download/get?id=${id}`
 }
 
 /*权限*/
 export function login(loginForm) {
-    return server.post('link/login',qs.stringify(loginForm)).then(handleStatus).then(success=>{
+    return server.post('link/login', qs.stringify(loginForm)).then(handleStatus).then(success => {
         if (success) {
-            sessionStorage.setItem('loggedIn','true')
-        }else {
+            sessionStorage.setItem('loggedIn', 'true')
+        } else {
             throw new Error('Error')
         }
     })
 }
+
 export function logout() {
-    return server.post('link/logout').then(handleStatus).then(success=>{
+    return server.post('link/logout').then(handleStatus).then(success => {
         if (success) {
-            sessionStorage.setItem('loggedIn','false')
+            sessionStorage.setItem('loggedIn', 'false')
         }
     })
 }
+
 export function loggedIn() {
     let s = sessionStorage.getItem('loggedIn')
     if (s === 'true') return true

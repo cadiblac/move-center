@@ -36,9 +36,10 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="内容">
-                <quill-editor v-model="content"
-                              :options="editorOption">
-                </quill-editor>
+                <editor v-model="content"/>
+                <!--<quill-editor v-model="content"-->
+                              <!--:options="editorOption">-->
+                <!--</quill-editor>-->
             </el-form-item>
             <el-form-item label="上传附件">
                 <annex-manager ref="annexManager"/>
@@ -56,10 +57,11 @@
     import moduleInfos from '../../moduleInfos'
     import {dateUtils} from "../../util";
     import AnnexManager from "./AnnexManager";
+    import Editor from "../Editor";
 
     export default {
         name: "AdminArticleAdd",
-        components: {AnnexManager},
+        components: {Editor, AnnexManager},
         data() {
             return {
                 annexUploadUrl,
@@ -113,16 +115,13 @@
                 this.$router.go(-1)
             },
             onSubmit() {
-                // 还没有添加封面图 退出
-                if (!this.faceImg) return
-
                 this.submitting = true
 
                 Promise.all(this.$refs.annexManager.annexList.map(annex => uploadAnnex(annex)))
                     .then(ids => {
                         this.annex = ids.join(',')
                     })
-                    .then(() => uploadImage(this.faceImg))
+                    .then(() => this.faceImg?uploadImage(this.faceImg):null)
                     // upload
                     .then(id => {
                             addArticle({

@@ -10,8 +10,6 @@
 </template>
 
 <script>
-    import pic1 from '../../assets/bb3.jpg'
-    import pic2 from '../../assets/bb2.jpg'
     import TheNavBar from '../../components/TheNavBar'
     import Slider from '../../components/Slider'
     import TheFooter from "../../components/TheFooter";
@@ -19,10 +17,14 @@
     import ExpertsSection from "./ExpertsSection";
     import ResearchSection from "./ResearchSection";
     import {getResourceUrl, getRotationList} from "../../API";
+    import Editor from "../../components/Editor";
+    import Pagination from "../../components/detail/Pagination";
 
     export default {
         name: 'home',
         components: {
+            Pagination,
+            Editor,
             ResearchSection,
             ExpertsSection,
             NewsSection,

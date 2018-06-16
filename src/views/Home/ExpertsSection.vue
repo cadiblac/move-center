@@ -32,8 +32,8 @@
         name: "ExpertsSection",
         components: {ExpertDisplayBox, BlueButton, SectionTitle, SectionContent},
         created(){
-            getSelfAdaptionArticle(7,0,1,4).then(list=>{
-                this.expertItems = list
+            getSelfAdaptionArticle(7,0,1,4).then(res=>{
+                this.expertItems = res.articleList
             })
         },
         data(){

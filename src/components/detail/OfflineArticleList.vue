@@ -44,18 +44,18 @@
         },
         data() {
             return {
-                test: 3,
-                isShowingArticle: false
             }
         },
-        methods:{
-            navigate(page){
-                this.$emit('navigate',page)
+        methods: {
+            navigate(page) {
+                this.$emit('navigate', page)
             }
         },
         watch: {
-            $route(val) {
-                this.isShowingArticle = val.matched.some(route => route.meta && route.meta.isArticle)
+        },
+        computed: {
+            isShowingArticle() {
+                return this.$route.matched.some(route => route.meta && route.meta.isArticle)
             }
         }
     }

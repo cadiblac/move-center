@@ -4,9 +4,9 @@
         <section class="content">
             <my-breadcrumb/>
             <page-title>{{title}}</page-title>
-            <el-menu mode="horizontal">
-                <el-menu-item :index="module.path" v-for="module in modules" :key="module.path">
-                    <router-link :to="path.join(urlBasePath,module.path)">{{module.name}}</router-link>
+            <el-menu mode="horizontal" router>
+                <el-menu-item :index="path.join(urlBasePath,module.path)" v-for="module in modules" :key="module.path">
+                    {{module.name}}
                 </el-menu-item>
             </el-menu>
             <router-view/>

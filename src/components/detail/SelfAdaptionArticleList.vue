@@ -70,9 +70,9 @@
                 getSelfAdaptionArticle(this.type, this.subType, page, this.pageSize)
                     .then(response => {
                         this.loading = false
-                        this.responseData = response
+                        this.responseData = response.articleList
 
-                        this.totalPage = Math.ceil(this.responseData.length / this.pageSize)
+                        this.totalPage = Math.ceil(response.count / this.pageSize)
                         this.currentPage = page
 
                     })

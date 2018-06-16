@@ -71,8 +71,8 @@
             // 请求curIndex对应module的文章
             requestArticle() {
                 getSelfAdaptionArticle(this.type[this.curIndex], 0, 1, 3)
-                    .then(articleList => {
-                        this.displayingBoxes = articleList
+                    .then(res => {
+                        this.displayingBoxes = res.articleList
                     })
             },
             test(){

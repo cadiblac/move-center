@@ -7,11 +7,11 @@
                 @click="emitNavigate(currentPage-1)"
         />
         <el-button
-                :type="currentPage===i+pagerCountStart-1?'success':''"
+                type="text"
+                :disabled="currentPage===i+pagerCountStart-1"
                 v-for="i in actualPagerCount"
                 @click="emitNavigate(i+pagerCountStart-1)"
                 :key="i+pagerCountStart-1"
-                circle
         >{{i+pagerCountStart-1}}
         </el-button>
         <el-button
@@ -20,6 +20,16 @@
                 :disabled="currentPage===totalPage"
                 @click="emitNavigate(currentPage+1)"
         />
+        <el-button
+                type="text"
+                @click="emitNavigate(1)"
+                :disabled="currentPage===1"
+        >首页</el-button>
+        <el-button
+                type="text"
+                @click="emitNavigate(totalPage)"
+                :disabled="currentPage===totalPage"
+        >尾页</el-button>
     </div>
 </template>
 
@@ -67,4 +77,11 @@
 </script>
 
 <style scoped lang="scss">
+    .pagination{
+        font-size: 1.5em;
+        margin: 1em 0;
+        width: 100%;
+        background-color: #ededed;
+        text-align: center;
+    }
 </style>

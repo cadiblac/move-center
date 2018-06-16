@@ -57,11 +57,11 @@
         name: "NewsSection",
         components: {SectionContent, SectionTitle, NoticeItem, NewsDisplayBox, PreviewBox, MyHr},
         created(){
-            getSelfAdaptionArticle(2,0,1,2).then(list=>{
-                this.newsItems = list
+            getSelfAdaptionArticle(2,0,1,2).then(res=>{
+                this.newsItems = res.articleList
             })
-            getSelfAdaptionArticle(3,0,1,8).then(list=>{
-                this.noticeItems = list
+            getSelfAdaptionArticle(3,0,1,8).then(res=>{
+                this.noticeItems = res.articleList
             })
         },
         data(){

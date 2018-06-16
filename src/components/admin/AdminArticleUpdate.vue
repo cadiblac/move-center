@@ -37,9 +37,10 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="内容">
-                <quill-editor v-model="content"
-                              :options="editorOption">
-                </quill-editor>
+                <editor v-model="content"/>
+                <!--<quill-editor v-model="content"-->
+                              <!--:options="editorOption">-->
+                <!--</quill-editor>-->
             </el-form-item>
             <el-form-item label="上传附件">
                 <annex-manager ref="annexManager" :annex-existed="annex" @delete="deleteAnnex"/>
@@ -54,14 +55,15 @@
 </template>
 
 <script>
-    import {getArticleById, uploadImage, updateArticle, deleteArticle, getResourceUrl, uploadAnnex} from "../../API";
+    import {getArticleById, uploadImage, updateArticle, deleteArticle, imageUploadUrl, uploadAnnex} from "../../API";
     import moduleInfos from '../../moduleInfos'
     import {dateUtils} from "../../util";
     import AnnexManager from "./AnnexManager";
+    import Editor from "../Editor";
 
     export default {
         name: "AdminArticleUpdate",
-        components: {AnnexManager},
+        components: {Editor, AnnexManager},
         created() {
             getArticleById(this.id).then(article => {
                 this.title = article.title

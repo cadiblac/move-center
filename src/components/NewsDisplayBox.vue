@@ -76,6 +76,7 @@
         color: rgb(79, 79, 79);
         padding: .5em 3em .5em 2em;
         background-color: rgba(255, 255, 255, .9);
+        box-sizing: border-box;
     }
 
 </style>
