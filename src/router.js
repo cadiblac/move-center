@@ -244,6 +244,7 @@ let routes = [
     },
 
 ]
+console.log(routes)
 export default new Router({
     routes
 })

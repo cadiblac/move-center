@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="`/experts/${id}`" class="expert-display-box">
+    <router-link :to="`/experts/any/${id}`" class="expert-display-box">
         <img class="expert-display-box__profile" :src="profile">
         <div class="expert-display-box__content">
             <h1 class="name"><span class="inner-name">{{name}}</span></h1>

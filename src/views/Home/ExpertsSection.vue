@@ -42,9 +42,6 @@
             }
         },
         methods:{
-            test(){
-                console.log('test')
-            }
         }
     }
 </script>

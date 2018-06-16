@@ -47,16 +47,14 @@ const handleSelfAdaptionArticle = data => {
 const handleArticle = data => {
     return new Promise((resolve, reject) => {
         // 处理图片链接
-        data.face = getResourceUrl(data.face)
+        data.faceId = data.face
+        data.face = getResourceUrl(data.faceId)
         // 处理附件
-        if (!data.annex) {
+        if (!data.annex||data.annex.length === 0) {
             data.annex = []
-            resolve(data)
-        } else if (data.annex.length === 0) {
             resolve(data)
         } else {
             Promise.all(data.annex.split(',').map(id => getAnnex(id).then(res => {
-                console.log(res)
 
                 return {
                     name: res.name, id
@@ -112,6 +110,8 @@ export function searchArticle(key, page = 1, rows = 10) {
     }).then(handleStatus)
 }
 
+
+
 /*静态资源*/
 export const imageUploadUrl = BASE_URL + 'article/upload'
 
@@ -164,3 +164,7 @@ export function deleteAnnex(id) {
 }
 
 export const annexUploadUrl = BASE_URL + 'download/upload'
+
+export function getAnnexDownloadUrl(id) {
+    return `http://m.wangjingxin.top:22223/move/api/v1/download/get?id=${id}`
+}

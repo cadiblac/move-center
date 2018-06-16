@@ -13,6 +13,7 @@
                 @needUpdate="requestArticle"
         />
         <offline-article v-else-if="responseData.length===1" v-bind="responseData"/>
+        <p v-else>暂无内容</p>
     </div>
 </template>
 

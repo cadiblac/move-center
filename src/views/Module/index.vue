@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Module:{{currentModule.name}}</h1>
         <router-link
                 v-for="subModule in subModules" :key="subModules.path"
                 :to="path.join('/',currentCategory.path,currentModule.path,subModule.path)">

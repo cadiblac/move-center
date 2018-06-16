@@ -64,14 +64,18 @@
         components: {AnnexManager},
         created() {
             getArticleById(this.id).then(article => {
-                console.log(article)
                 this.title = article.title
                 this.content = article.content
                 this.author = article.author
                 this.face = article.face
+                this.faceId = article.faceId
                 this.from = article.from
                 this.date = article.date
                 this.annex = article.annex
+                this.type = article.type
+                this.subType = article.subType || 0
+
+                this.selectedOptions = this.computeSelectedOptions(this.type, this.subType)
             })
         },
         props: {
@@ -111,6 +115,7 @@
 
 
                 face: undefined,
+                faceId: undefined,
                 facaImg: undefined,
                 faceModified: false,
 
@@ -122,7 +127,7 @@
 
             // 展示出来的图片url可能来自服务器 也可能来自本地
             faceUrl() {
-                return this.faceModified ? URL.createObjectURL(this.faceImg) : getResourceUrl(this.face)
+                return this.faceModified ? URL.createObjectURL(this.faceImg) : this.face
             },
         },
         watch: {
@@ -133,6 +138,10 @@
             }
         },
         methods: {
+            computeSelectedOptions(type, subType) {
+
+                return [moduleInfos.find(category => category.modules.findIndex(module => module.type === type) !== -1).name, type, subType]
+            },
             cancel() {
                 this.$router.go(-1)
             },
@@ -177,7 +186,7 @@
                     let faceForm = new FormData()
                     faceForm.append('file', this.faceImg)
                     pipeline = uploadImage(faceForm).then(id => {
-                        this.face = id
+                        this.faceId = id
                     })
                 }
 
@@ -193,7 +202,7 @@
                         from: this.from,
                         content: this.content,
                         date: this.date,
-                        face: this.face,
+                        face: this.faceId,
                         annex: this.annex.map(annex => annex.id).concat(ids).join(',')
                     }))
                     .then(

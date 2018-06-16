@@ -1,9 +1,9 @@
 <template>
     <router-link :to="link" :class="[boxClassName,'preset-news-display-box-style']"
-       :style="{backgroundImage:`url(${backgroundImage})`}">
+                 :style="{backgroundImage:`url(${backgroundImage})`}">
         <div class="date-label">
-            <span class="month">{{getMonthEngWord(new Date(date).getMonth())}}</span><br>
-            <span class="day">{{new Date(date).getDay()}}</span>
+            <span class="month">{{month}}</span><br>
+            <span class="day">{{day}}</span>
         </div>
         <div class="title-area">{{title}}</div>
     </router-link>
@@ -20,15 +20,21 @@
             backgroundImage: String,
             title: String,
             link: {
-                default:''
+                default: ''
             },
             date: {
-                type: Number,
-                default: null
+                type: String,
+                default: ''
             }
         },
-        methods: {
-            getMonthEngWord: dateUtils.getMonthEngWord
+        methods: {},
+        computed: {
+            month() {
+                return dateUtils.getMonthEngWord(Number(this.date.split('-')[1])-1)
+            },
+            day(){
+                return this.date.split('-')[2]
+            }
         }
     }
 </script>
@@ -43,32 +49,33 @@
         background-size: cover;
     }
 
-    .date-label{
+    .date-label {
         text-align: center;
         width: 4em;
         height: 4.3em;
-        background-color: rgb(32,59,91);
+        background-color: rgb(32, 59, 91);
         color: white;
         padding-top: .5em;
         box-sizing: border-box;
         position: absolute;
         left: 2em;
-        top:0;
-
-
+        top: 0;
 
     }
-    .date-label .day{
+
+    .date-label .day {
         font-size: 1.5em;
         font-weight: 900;
 
     }
-    .title-area{
+
+    .title-area {
+        width: 100%;
         position: absolute;
         bottom: 0;
-        color: rgb(79,79,79);
+        color: rgb(79, 79, 79);
         padding: .5em 3em .5em 2em;
-        background-color: rgba(255,255,255,.9);
+        background-color: rgba(255, 255, 255, .9);
     }
 
 </style>
