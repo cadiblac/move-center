@@ -1,5 +1,5 @@
 <template>
-    <div class="my-slider">
+    <div class="my-slider" @mouseenter="cancelAutoSwitch" @mouseleave="resetAutoSwitch">
         <img src="../assets/back.png" class="navgation-icon back" @click="back">
         <img src="../assets/forward.png" class="navgation-icon forward" @click="forward">
         <slider-item
@@ -26,37 +26,59 @@
                 default() {
                     return []
                 }
+            },
+            auto: {
+                type: Boolean,
+                default: false
+            },
+            // 自动切换的停留时间 单位秒
+            autoSwitchTime: {
+                type: Number,
+                default: 5
             }
         },
-        data(){
-            return{
-                curDisplayedItemIndex:0
+        data() {
+            return {
+                curDisplayedItemIndex: 0,
+                autoSwitchId: null
             }
         },
         mounted() {
         },
-        methods:{
-            back(){
+        methods: {
+            back() {
                 this.curDisplayedItemIndex--
-                if (this.curDisplayedItemIndex<0){
-                    this.curDisplayedItemIndex = this.displayedItems.length-1
+                if (this.curDisplayedItemIndex < 0) {
+                    this.curDisplayedItemIndex = this.displayedItems.length - 1
                 }
             },
-            forward(){
+            forward() {
                 this.curDisplayedItemIndex++
-                if (this.curDisplayedItemIndex>=this.displayedItems.length){
+                if (this.curDisplayedItemIndex >= this.displayedItems.length) {
                     this.curDisplayedItemIndex = 0
                 }
+            },
+            cancelAutoSwitch() {
+                if (!this.auto) return
+                if (!this.autoSwitchId) return
+                clearInterval(this.autoSwitchId)
+                this.autoSwitchId = null
+            },
+            resetAutoSwitch() {
+                if (!this.auto) return
+                if (this.autoSwitchId) clearInterval(this.autoSwitchId)
+                this.autoSwitchId = setInterval(this.forward, this.autoSwitchTime * 1000)
             }
         }
     }
 </script>
 
 <style scoped>
-    .my-slider{
+    .my-slider {
         position: relative;
     }
-    .navgation-icon{
+
+    .navgation-icon {
         padding-top: 1em;
         padding-bottom: 1em;
         height: 3em;
@@ -67,15 +89,18 @@
         transition-property: background-color;
         transition-duration: .2s;
     }
-    .navgation-icon.back{
+
+    .navgation-icon.back {
         padding-left: 1em;
         left: 0;
     }
-    .navgation-icon:hover{
-        background-color: rgba(200,200,200,.5);
+
+    .navgation-icon:hover {
+        background-color: rgba(200, 200, 200, .5);
         cursor: pointer;
     }
-    .navgation-icon.forward{
+
+    .navgation-icon.forward {
         padding-right: 1em;
         right: 0;
     }

@@ -6,13 +6,16 @@
         </section-title>
         <section-content>
             <div class="expert-group">
-                <expert-display-box
-                        v-for="expertItem in expertItems"
-                        :profile="expertItem.face"
-                        :name="expertItem.title"
-                        :introduction="expertItem.summary"
-                        :id="expertItem.id"
-                />
+                <scroll-box style="height: 307px" ref="expertScroller">
+                    <expert-display-box
+                            style="margin-right: 3em"
+                            v-for="expertItem in expertItems"
+                            :profile="expertItem.face"
+                            :name="expertItem.title"
+                            :introduction="expertItem.summary"
+                            :id="expertItem.id"
+                    />
+                </scroll-box>
             </div>
             <template slot="more">
                 <blue-button @click="$router.push('/experts/all')">更多专家资源</blue-button>
@@ -27,14 +30,20 @@
     import BlueButton from "../../components/BlueButton";
     import ExpertDisplayBox from "../../components/ExpertDisplayBox";
     import {getSelfAdaptionArticle} from "../../API";
+    import ScrollBox from "./ScrollBox";
 
     export default {
         name: "ExpertsSection",
-        components: {ExpertDisplayBox, BlueButton, SectionTitle, SectionContent},
+        components: {ScrollBox, ExpertDisplayBox, BlueButton, SectionTitle, SectionContent},
         created(){
-            getSelfAdaptionArticle(7,0,1,4).then(res=>{
-                this.expertItems = res.articleList
-            })
+            // 试探性的取一个 然后得到数量
+            getSelfAdaptionArticle(7,0,1,1)
+                .then(res=>res.count)
+                .then(count=>getSelfAdaptionArticle(7,0,1,count))
+                .then(res=>res.articleList)
+                .then(articleList=>{
+                    this.expertItems = articleList
+                })
         },
         data(){
             return{
@@ -42,6 +51,11 @@
             }
         },
         methods:{
+        },
+        watch:{
+            expertItems(val){
+                this.$refs.expertScroller.updateDom()
+            }
         }
     }
 </script>
@@ -57,10 +71,9 @@
         }
 
         .expert-group {
+            width: 100%;
+            box-sizing: border-box;
             padding: 0 2em 3em 2em;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: nowrap;
         }
 
     }

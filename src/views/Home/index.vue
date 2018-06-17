@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <the-nav-bar id="nav-bar"/>
-        <slider id="banner-slider" :displayedItems="sliderItems" v-if="sliderItems.length>=1"/>
+        <slider auto id="banner-slider" :displayedItems="sliderItems" v-if="sliderItems.length>=1"/>
         <news-section/>
         <experts-section/>
         <research-section/>
@@ -19,10 +19,14 @@
     import {getResourceUrl, getRotationList} from "../../API";
     import Editor from "../../components/Editor";
     import Pagination from "../../components/detail/Pagination";
+    import ScrollBox from "./ScrollBox";
+    import ExpertDisplayBox from "../../components/ExpertDisplayBox";
 
     export default {
         name: 'home',
         components: {
+            ExpertDisplayBox,
+            ScrollBox,
             Pagination,
             Editor,
             ResearchSection,
@@ -39,6 +43,7 @@
             }))).then(list => {
                 this.sliderItems = list
             })
+
         },
         data() {
             return {

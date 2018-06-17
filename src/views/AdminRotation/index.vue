@@ -16,7 +16,6 @@
 
 <script>
     import {getRotationList} from "../../API";
-    import testImg from '../../assets/experts_1.jpg'
     import RotationDisplayCard from './components/RotationDisplayCard'
 
     export default {
