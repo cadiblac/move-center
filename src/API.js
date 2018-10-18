@@ -1,8 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/move/api/v1/' : 'http://103.202.110.58/move/api/v1/'
-const RESOURCE_URL = process.env.NODE_ENV === 'production' ? '/resource/' : 'http://103.202.110.58/resource/'
+const BASE_URL = '/move/api/v1/' 
+const RESOURCE_URL = '/resource/'
 
 class PermissionDeniedError extends Error {
     constructor(message) {
