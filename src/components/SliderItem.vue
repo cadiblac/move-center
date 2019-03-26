@@ -16,12 +16,12 @@
             subTitle: '',
             backgroundImage: null,
             show: true,
-            link:''
+            link: ''
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .slider-item {
         display: block;
         position: absolute;
@@ -47,7 +47,15 @@
 
     .slider-item .content {
         position: absolute;
-        bottom: 40px;
-        left: 20px;
+        width: 600px;
+        height: 150px;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(50, 50, 50, .2);
+        
+        &:hover {
+            background-color: rgba(44, 66, 99, .7);
+        }
     }
 </style>

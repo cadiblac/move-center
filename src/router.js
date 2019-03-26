@@ -26,7 +26,6 @@ import AdminArticleUpdate from './components/admin/AdminArticleUpdate'
 
 import path from 'path'
 
-
 Vue.use(Router)
 
 let articleRoute = {
@@ -251,6 +250,7 @@ let routes = [
     },
 
 ]
+console.log(routes)
 export default new Router({
     routes
 })

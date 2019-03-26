@@ -10,7 +10,7 @@
                 <preview-box
                         title="动态"
                         title-eng="Events"
-                        all-link="/info/news"
+                        all-link="/news/recentNews"
                 >
                     <p v-if="newsItems.length==0">暂无新闻</p>
                     <news-display-box
@@ -21,13 +21,13 @@
                             :date="newsItem.date"
                             :title="newsItem.title"
                             :background-image="newsItem.face"
-                            :link="`/info/news/${newsItem.id}`"
+                            :link="`/news/recentNews/${newsItem.id}`"
                     />
                 </preview-box>
                 <preview-box
                         title="通知"
                         title-eng="Notices"
-                        all-link="/info/notice"
+                        all-link="/news/notice"
                         style="width: 300px">
                     <p v-if="noticeItems.length==0">暂无通知</p>
                     <notice-item
@@ -36,7 +36,7 @@
                             :key="noticeItem.id"
                             :title="noticeItem.title"
                             :date="noticeItem.date"
-                            :link="`/info/notice/${noticeItem.id}`"
+                            :link="`/news/notice/${noticeItem.id}`"
                             style="margin: .5em 0"/>
                 </preview-box>
             </div>
@@ -74,10 +74,11 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../style/variables";
+    @import "../../variables";
 
     .section-news {
-        padding: $index-section-paddding;
+        width: $index-content-width;
+        margin: auto;
 
         .news-box {
             display: inline-block;

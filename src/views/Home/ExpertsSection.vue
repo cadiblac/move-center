@@ -2,7 +2,7 @@
     <section class="section-experts">
         <section-title>
             <template slot="eng">EXPERTS</template>
-            <template slot="chs">专家资源</template>
+            <template slot="chs">人才蓄水池</template>
         </section-title>
         <section-content>
             <div class="expert-group">
@@ -18,7 +18,7 @@
                 </scroll-box>
             </div>
             <template slot="more">
-                <blue-button @click="$router.push('/experts/all')">更多专家资源</blue-button>
+                <blue-button @click="$router.push('/experts/gdrc')">更多高端人才</blue-button>
             </template>
         </section-content>
     </section>

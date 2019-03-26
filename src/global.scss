@@ -1,9 +1,8 @@
+@import "./variables.scss";
 body {
     margin: 0 auto;
-    width: 1200px;
+    min-width: $index-min-page-width;
     min-height: 100vh;
-    background-color: white;
-    box-shadow: 1px 1px 20px rgba(50, 50, 50, .5);
 }
 
 html {

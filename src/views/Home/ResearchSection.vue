@@ -1,8 +1,8 @@
 <template>
     <section class="section-research">
         <section-title>
-            <template slot="eng">REASEARCH</template>
-            <template slot="chs">研究专利</template>
+            <template slot="eng">DEPARTMENT</template>
+            <template slot="chs">创新中心</template>
         </section-title>
         <my-hr/>
         <section-content>
@@ -12,9 +12,9 @@
                     class="research-nav-bar"
                     mode="horizontal"
             >
-                <el-menu-item index="0">技术成果</el-menu-item>
-                <el-menu-item index="1">专利信息</el-menu-item>
-                <el-menu-item index="2">成功案例</el-menu-item>
+                <el-menu-item index="0">中心介绍</el-menu-item>
+                <el-menu-item index="1">成果推介</el-menu-item>
+                <el-menu-item index="2">成果孵化</el-menu-item>
             </el-menu>
             <div class="research-display-box-wrapper" style="font-size: .9em">
                 <research-display-box
@@ -28,14 +28,14 @@
                 />
             </div>
             <template slot="more">
-                <router-link :to="'/achievement/technology'" v-if="curIndex==='0'">
-                    <blue-button>更多技术成果</blue-button>
+                <router-link :to="'/department/departmentIntroduction'" v-if="curIndex==='0'">
+                    <blue-button>全部创新中心</blue-button>
                 </router-link>
-                <router-link :to="'/achievement/patent'" v-else-if="curIndex==='1'">
-                    <blue-button>更多专利信息</blue-button>
+                <router-link :to="'/department/cgtj'" v-else-if="curIndex==='1'">
+                    <blue-button>更多成果推介</blue-button>
                 </router-link>
-                <router-link :to="'/achievement/case'" v-else="curIndex==='2'">
-                    <blue-button>更多成功案例</blue-button>
+                <router-link :to="'/department/cgfh'" v-else="curIndex==='2'">
+                    <blue-button>更多成果孵化</blue-button>
                 </router-link>
             </template>
         </section-content>
@@ -83,10 +83,11 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../style/variables";
+    @import "../../variables";
 
     .section-research {
-        padding: $index-section-paddding;
+        width: $index-content-width;
+        margin: auto;
         .research-nav-bar {
             padding-left: 400px;
             margin-bottom: 4em;

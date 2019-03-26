@@ -29,44 +29,39 @@ let Module = (name, path, type, containSubModule = false) => ({
 
 
 export default [
-    Category('中心概况', 'overview', {
-        title:'OVERVIEW'
+    Category('关于我们','about',{
+        title:'ABOUT'
     },[
-        Module('中心简介', 'introduction', 0),
-        Module('中心人员', 'staff', 1),
+        Module('工研院（科技园）介绍','introduction',0),
+        Module('部门黄页','contact',1),
+        Module('部门职责','function',2),
     ]),
-    Category('新闻通告', 'info', {
+    Category('新闻中心','news',{
         title:'NEWS'
     },[
-        Module('新闻动态', 'news', 2),
-        Module('通知', 'notice', 3),
+        Module('通知公告','notice',3),
+        Module('新闻动态','recentNews',4),
+        Module('产业动态','industryNews',5),
     ]),
-    Category('成果专利', 'achievement', {
-        title:'ACHIEVEMENT'
+    Category('创新中心','department',{
+        title:'CENTER'
     },[
-        Module('技术成果', 'technology', 4, true),
-        Module('专利信息', 'patent', 5),
-        Module('成功案例', 'case', 6),
+        Module('中心介绍','departmentIntroduction',6),
+        Module('成果推介','cgtj',7),
+        Module('成果孵化','cgfh',8),
     ]),
-    Category('专家资源', 'experts', {
+    Category('人才建设','experts',{
         title:'EXPERTS'
     },[
-        Module('专家资源', 'experts',7,true)
+        Module('高端人才','gdrc',9),
+        Module('人才招聘','rczp',10),
     ]),
-    Category('新旧动能转化', 'translation', {
-        title:'TRANSLATION'
+    Category('产学研政策','policy',{
+        title:'POLICY'
     },[
-        Module('新旧动能转化', 'translation',8,true)
-    ]),
-    Category('办事指南', 'guidence',{
-        title:'GUIDENCE'
-    },[
-        Module('办事指南', 'guidence',9)
-    ]),
-    Category('常用下载', 'download',{
-        title:'DOWNLOADS'
-    },[
-        Module('常用下载', 'download',10)
+        Module('国家政策','country',11),
+        Module('地方政策','local',12),
+        Module('学校政策','school',13),
     ]),
 ]
 

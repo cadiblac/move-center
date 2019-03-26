@@ -31,43 +31,9 @@
                     CopyRight © 2014-2016 All Rights Reserved By The Technology Transfer Center of Shandong University
                 </div>
             </div>
-            <div class="right contact">
-                <h1>中心工作事务联系方式</h1>
-                <div class="contact__content">
-                    <div class="left">
-                        <h2>知识产权运营</h2>
-                        <p>联系人：牟春竹<br/>
-                            办公地址：中心校区明德楼B区441房间<br/>
-                            办公电话：0531-88380308
-                        </p>
-                        <h2>对外合作</h2>
-                        <p>联系人：徐阳<br/>
-                            办公地址：中心校区明德楼B区410房间<br/>
-                            办公电话：0531-88362686
-                        </p>
-                        <p>
-                            联系人：刘灿刚<br/>
-                            办公地址：中心校区明德楼B区410房间<br/>
-                            办公电话：0531-88392972</p>
-                    </div>
-                    <div class="right">
-                        <p>联系人：孙海磊<br/>
-                            办公地址：中心校区明德楼B区410房间<br/>
-                            办公电话：0531-88392972</p>
-                        <p>联系人：朱西民<br/>
-                            办公地址：中心校区明德楼B区435房间<br/>
-                            办公电话：0531-88369600</p>
-                        <p>联系人：柳瞳瞳<br/>
-                            办公地址：中心校区明德楼B区435房间<br/>
-                            办公电话：0531-88369600
-                        </p>
-                        <h2>中心综合事务管理</h2>
-                        <p>联系人：孙岩<br/>
-                            办公地址：中心校区明德楼B区410房间<br/>
-                            办公电话：0531-88362680
-                        </p>
-                    </div>
-                </div>
+            <div class="right wechat">
+                <h1>微信公众号</h1>
+                <div><img src="../assets/qrcode.png" style="width: 200px;height: 200px"></div>
             </div>
         </div>
     </footer>
@@ -80,7 +46,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../style/variables";
+    @import "../variables";
 
     footer {
         background: {
@@ -89,7 +55,6 @@
         }
         color: #787878;
         font-size: .9em;
-        padding: $index-section-paddding;
 
         .logo {
             width: 290px;
@@ -104,12 +69,11 @@
         .copyright {
             font-size: .9em;
         }
-        .contact__content {
-             display: flex;
-         }
     }
 
     .footer__content {
+        width: $index-content-width;
+        margin: auto;
         display: flex;
         align-items: stretch;
         flex-wrap: nowrap;

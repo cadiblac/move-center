@@ -9,7 +9,7 @@
     }
 </script>
 <style>
-    @import "global.css";
+    @import "global.scss";
     #app{
         position: relative;
     }

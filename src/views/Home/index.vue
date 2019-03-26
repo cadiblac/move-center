@@ -52,18 +52,21 @@
         }
     }
 </script>
-<style scoped>
+<style scoped lang="scss">
+    @import "../../variables";
     #nav-bar {
         position: absolute;
-        left: 0;
-        top: 0;
+        width: $index-navigation-width;
+        left: 50%;
+        top: 50px;
+        transform: translateX(-50%);
         z-index: 999;
 
     }
 
     #banner-slider {
         width: 100%;
-        height: 500px;
+        height: 642px;
     }
 
 </style>
