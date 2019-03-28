@@ -53,7 +53,7 @@
     }
 </script>
 <style scoped lang="scss">
-    @import "../../variables";
+    @import "../../style/variables";
     #nav-bar {
         position: absolute;
         width: $index-navigation-width;

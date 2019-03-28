@@ -8,8 +8,8 @@
     export default {
     }
 </script>
-<style>
-    @import "global.scss";
+<style lang="scss">
+    @import "style/global";
     #app{
         position: relative;
     }

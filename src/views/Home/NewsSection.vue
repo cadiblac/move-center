@@ -74,7 +74,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../variables";
+    @import "../../style/variables";
 
     .section-news {
         width: $index-content-width;

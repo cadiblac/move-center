@@ -83,7 +83,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../variables";
+    @import "../../style/variables";
 
     .section-research {
         width: $index-content-width;

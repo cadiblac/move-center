@@ -6,10 +6,11 @@
                     <div class="left">
                         <img src="../assets/logo2.png" class="logo">
                         <div class="info">
-                            <p>地 址：山东济南山大南路27号明德楼B410房间 B435房间</p>
-                            <p>邮 编：250100</p>
-                            <p>传 真：0531-88362065 </p>
-                            <p>Email：jszy@sdu.edu.cn </p>
+                            <p>地 址：山东济南经十路17923号创新大厦320</p>
+                            <p>邮 编：250061</p>
+                            <p>电 话：0531-88393398, 0531-88393838</p>
+                            <p>传 真：0531-88393838</p>
+                            <!--<p>Email：jszy@sdu.edu.cn </p>-->
                         </div>
                     </div>
                     <div class="right friendly-link">
@@ -33,7 +34,7 @@
             </div>
             <div class="right wechat">
                 <h1>微信公众号</h1>
-                <div><img src="../assets/qrcode.png" style="width: 200px;height: 200px"></div>
+                <div><img src="../assets/qrcode.jpg" style="width: 200px;height: 200px"></div>
             </div>
         </div>
     </footer>
@@ -46,7 +47,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../variables";
+    @import "../style/variables";
 
     footer {
         background: {

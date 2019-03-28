@@ -1,4 +1,5 @@
-@import "./variables.scss";
+@import "variables";
+
 body {
     margin: 0 auto;
     min-width: $index-min-page-width;
@@ -8,10 +9,9 @@ body {
 html {
     background-color: #f6f6f6;
     font-size: 14px;
-    font-family: "Microsoft YaHei UI","微软雅黑";
+    font-family: "Microsoft YaHei UI", "微软雅黑";
 }
 
-
-a{
+a {
     text-decoration: none;
 }
